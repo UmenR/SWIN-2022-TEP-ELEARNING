@@ -1,22 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+
+/**
+ * TOD: remove once done
+ * We use a CSS in JS approach to maintain components via 'styeld components'
+ * refer to https://styled-components.com/docs/basics#getting-started
+ */
+const Header = styled.h1`
+  color:red
+`
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+       <Header>
+        Styled Component Test
+       </Header>
       </header>
     </div>
   );
