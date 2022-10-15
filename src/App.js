@@ -1,12 +1,12 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 
 import HomePage from "./features/home/Home";
 import Login from "./features/login/Login";
 import QuizList from "./features/quizes/QuizList";
+import ProtectedRoute from "./common/Protected";
 
 import { api } from "./api/Request";
-
 
 /**
  * TOD: remove once done
@@ -17,26 +17,50 @@ const Header = styled.h1`
   color: red;
 `;
 
-function App() {
+const NavList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-  async function testOnClick(){
-    const response = await api.get("/users",{params:{
-      page:2
-    }})
-    console.log(`data ${response.data}`)
-  } 
+function App() {
+  async function testOnClick() {
+    const response = await api.get("/users", {
+      params: {
+        page: 2,
+      },
+    });
+    console.log(`data ${response.data}`);
+  }
 
   return (
     <>
       <Header>Styled Component Test</Header>
       <button onClick={testOnClick}>make API request</button>
+      <NavList>
+        <div>
+          <Link to="/quizzes/list">quizes</Link>
+        </div>
+        <div>
+          <Link to="/home">home</Link>
+        </div>
+        <div>
+          <Link to="/login">login</Link>
+        </div>
+      </NavList>
       <Routes>
-            <Route path="/home" element={<HomePage/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/quizes">
-                <Route path="list" element={<QuizList/>}/>
-            </Route>
-        </Routes>
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/quizzes">
+          <Route
+            path="list"
+            element={
+              <ProtectedRoute>
+                <QuizList />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+      </Routes>
     </>
   );
 }
