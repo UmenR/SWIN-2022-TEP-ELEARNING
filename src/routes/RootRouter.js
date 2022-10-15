@@ -13,6 +13,8 @@ function RootRouter(){
             <Routes path="/quizes">
                 <Route path="/list" element={QuizList}/>
             </Routes>
+            <Route path="/chaptermain" element={ChapterMainView}/>
+            <Route path="/login" element={Login}/>
         </Routes>
     )
 }
