@@ -1,6 +1,5 @@
 import React from "react";
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik, Form, Field, FieldArray } from "formik";
 
 import { PRE_DEFINED_QUESTION_NUMBER } from "../../constatns";
 
@@ -43,9 +42,10 @@ function QuestionsPage() {
       <h1>Questions Page</h1>
       <div>
         <h2>Add questions</h2>
+
         <Formik initialValues={initialFormValues} onSubmit={onSubmit}>
-          {({ values, setValues }) => {
-            <>
+          {({ values, setValues }) => {return(
+            <Form>
               <Field name="numberOfQuestions">
                 {({ field }) => (
                   <select
@@ -72,7 +72,7 @@ function QuestionsPage() {
                           <h5 className="card-title">question {i + 1}</h5>
                           <div className="form-row">
                             <div className="form-group col-6">
-                              <label>Name</label>
+                              <label>question</label>
                               <Field
                                 name={`questions.${i}.name`}
                                 type="text"
@@ -86,10 +86,12 @@ function QuestionsPage() {
                   })
                 }
               </FieldArray>
-            </>;
-          }}
+            </Form>
+          )}}
         </Formik>
       </div>
     </>
   );
 }
+
+export default QuestionsPage;

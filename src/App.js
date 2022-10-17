@@ -4,6 +4,7 @@ import styled from "styled-components";
 import HomePage from "./features/home/Home";
 import Login from "./features/login/Login";
 import QuizList from "./features/quizes/QuizList";
+import QuestionsPage from "./features/questions/QuestionsPage";
 import ProtectedRoute from "./common/Protected";
 
 import { api } from "./api/Request";
@@ -46,6 +47,9 @@ function App() {
         <div>
           <Link to="/login">login</Link>
         </div>
+        <div>
+          <Link to="/questions/add">questions</Link>
+        </div>
       </NavList>
       <Routes>
         <Route path="/home" element={<HomePage />} />
@@ -59,6 +63,10 @@ function App() {
               </ProtectedRoute>
             }
           />
+        </Route>
+        {/* Questions page  */}
+        <Route path="/questions">
+          <Route path="add" element={<QuestionsPage />} />
         </Route>
       </Routes>
     </>
