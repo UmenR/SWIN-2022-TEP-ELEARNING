@@ -47,7 +47,7 @@ export const questionsSlice = createSlice({
 
 const { setQuestions } = questionsSlice.actions;
 
-export const loginUser = createAsyncThunk(
+export const fetchQuestions = createAsyncThunk(
   `questions/get`,
   async ({ params }, { dispatch }) => {
     // No Authetnicated user found
