@@ -1,11 +1,14 @@
 import { combineReducers } from '@reduxjs/toolkit'
+
 import authenticationSlice from './authentication/authenticationSlice'
 import counterSlice from './counterSlice'
+import questionsSlice from '../features/questions/questionsSlice'
 
 
 const combinedReducer = combineReducers({
     default:counterSlice,
-    authentication:authenticationSlice
+    authentication:authenticationSlice,
+    questions:questionsSlice,
 })
 
 function rootReducer(state, action) {

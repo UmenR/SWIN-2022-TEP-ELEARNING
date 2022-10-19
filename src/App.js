@@ -8,6 +8,7 @@ import QuestionsPage from "./features/questions/QuestionsPage";
 import ProtectedRoute from "./common/Protected";
 
 import { api } from "./api/Request";
+import QuestionsList from "./features/questions/QuestionsList";
 
 /**
  * TOD: remove once done
@@ -67,6 +68,7 @@ function App() {
         {/* Questions page  */}
         <Route path="/questions">
           <Route path="add" element={<QuestionsPage />} />
+          <Route path="list" element={<QuestionsList />} />
         </Route>
       </Routes>
     </>

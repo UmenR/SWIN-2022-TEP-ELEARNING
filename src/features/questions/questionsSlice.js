@@ -21,11 +21,33 @@ const MOCK_QUESTIONS = [
       },
       {
         id: 3,
-        text: 3,
+        text: 4,
       },
       {
         id: 4,
+        text: 5,
+      },
+    ],
+  },
+  {
+    id: 2,
+    text: "what is 2+1",
+    answers: [
+      {
+        id: 1,
+        text: 1,
+      },
+      {
+        id: 2,
+        text: 3,
+      },
+      {
+        id: 3,
         text: 4,
+      },
+      {
+        id: 4,
+        text: 5,
       },
     ],
   },
@@ -65,3 +87,5 @@ export const fetchQuestions = createAsyncThunk(
     }
   }
 );
+
+export default questionsSlice.reducer
