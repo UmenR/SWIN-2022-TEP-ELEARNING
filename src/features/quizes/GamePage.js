@@ -1,0 +1,214 @@
+import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+
+import { selectedGameQuizSelector } from "./quizSelectors";
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+const Col = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 2px solid grey;
+  height: 100%;
+  padding: 10px;
+`;
+
+const TitleRow = styled(Row)`
+    height: 100px;
+    width: 100%
+    background: black;
+`;
+
+const StyledButton = styled.button`
+  height: 50px;
+  width: 200px;
+  background: red;
+  margin-top: 20px;
+`;
+
+const AnswerButton = styled.div`
+  height: 200px;
+  width: 200px;
+  background: ${(props) => (props.isSelected ? `yellow` : `green`)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const AnswerRow = styled(Row)`
+  padding-left: 20%;
+  padding-right: 20%;
+  justify-content: space-between;
+  margin-bottom: 50px;
+`;
+
+const AnswerText = styled.h1`
+  color: red;
+`;
+
+const ANSWER_STATES = {
+  NO_ANSWER: 1,
+  CORRECT: 2,
+  WRONG: 3,
+};
+
+function GamePage() {
+  const currentQuiz = useSelector(selectedGameQuizSelector);
+
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const currentQuizIndexRef = useRef(0)
+  const [answers, setAnswers] = useState([]);
+
+  const [isValid, setIsValid] = useState(false);
+  const [answerState, setAnswerState] = useState(ANSWER_STATES.NO_ANSWER);
+
+  function getButtonText() {
+    if (answerState === ANSWER_STATES.NO_ANSWER) return "Check Answer";
+    return "Next";
+  }
+
+  function clearAnswerState(){
+    setIsValid(false);
+    setAnswers([]);
+    setAnswerState(ANSWER_STATES.NO_ANSWER);
+  }
+
+  function startQuiz() {
+    setCurrentQuestion(currentQuiz.questions[currentQuizIndexRef.current]);
+    clearAnswerState()
+  }
+
+  function setValidity() {
+    if (answers.length > 0) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }
+
+  function clickAnswer(id) {
+    // Answer already exists
+    const answerIndex = answers.findIndex((element) => id === element)
+    console.log(answerIndex)
+    if ( answerIndex > -1) {
+      answers.splice(answerIndex, 1);
+      setAnswers([...answers]);
+    } else {
+      setAnswers([...answers, id]);
+    }
+  }
+
+  function isSelected(index) {
+    // console.log(` ${index} ${!!answers.find((element) => 0 === element)}`);
+    return answers.findIndex((element) => index === element) > -1;
+  }
+
+  function checkAnswerValidity(){
+    let isCorrect = false
+    for(const answer of answers){
+      let isValid = false
+      for(const solution of currentQuestion.solutions){
+        if(solution.id === answer) {
+          isValid = true;
+        }
+      }
+      if(!isValid){
+        isCorrect = false
+        break;
+      }
+      isCorrect = true;
+    }
+    return isCorrect
+  }
+
+  function clickCheckValidity(){
+    if(checkAnswerValidity()){
+      currentQuizIndexRef.current = currentQuizIndexRef.current + 1
+      setCurrentQuestion(currentQuiz.questions[currentQuizIndexRef.current]);
+      clearAnswerState()
+    }
+  }
+
+
+  useEffect(() => {
+    setValidity();
+  });
+
+  return (
+    <Container>
+      <TitleRow>
+        {currentQuestion ? (
+          <h1>{currentQuestion.text}</h1>
+        ) : (
+          <h1>Click Start to Begin</h1>
+        )}
+      </TitleRow>
+      {currentQuestion && (
+        <>
+          <AnswerRow>
+            <Col>
+              <AnswerButton
+                isSelected={isSelected(currentQuestion.answers[0].id)}
+                onClick={() => clickAnswer(currentQuestion.answers[0].id)}
+              >
+                <AnswerText>{currentQuestion.answers[0].text}</AnswerText>
+              </AnswerButton>
+            </Col>
+            <Col>
+              <AnswerButton
+                isSelected={isSelected(currentQuestion.answers[1].id)}
+                onClick={() => clickAnswer(currentQuestion.answers[1].id)}
+              >
+                <AnswerText>{currentQuestion.answers[1].text}</AnswerText>
+              </AnswerButton>
+            </Col>
+          </AnswerRow>
+          <AnswerRow>
+            <Col>
+              <AnswerButton
+                isSelected={isSelected(currentQuestion.answers[2].id)}
+                onClick={() => clickAnswer(currentQuestion.answers[2].id)}
+              >
+                <AnswerText>{currentQuestion.answers[2].text}</AnswerText>
+              </AnswerButton>
+            </Col>
+            <Col>
+              <AnswerButton
+                isSelected={isSelected(currentQuestion.answers[3].id)}
+                onClick={() => clickAnswer(currentQuestion.answers[3].id)}
+              >
+                <AnswerText>{currentQuestion.answers[3].text}</AnswerText>
+              </AnswerButton>
+            </Col>
+          </AnswerRow>
+          <Row>
+            <StyledButton onClick={clickCheckValidity} disabled={!isValid} type="button">
+              {getButtonText()}
+            </StyledButton>
+          </Row>
+        </>
+      )}
+      {!currentQuestion && (
+        <Row>
+          <StyledButton type="button" onClick={startQuiz}>
+            Start Quiz
+          </StyledButton>
+        </Row>
+      )}
+    </Container>
+  );
+}
+
+export default GamePage;
