@@ -1,8 +1,8 @@
 
-// Home page.
+// Home page
 function HomePage(){
     return(
-        <h1>Home page</h1>
+        <h2>Adding Insights page here</h2>
     )
 }
 
