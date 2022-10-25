@@ -11,6 +11,7 @@ import { api } from "./api/Request";
 import QuestionsList from "./features/questions/QuestionsList";
 import GamePage from "./features/quizes/GamePage";
 import CreateQuiz from "./features/quizes/CreateQuiz";
+import ResultsPage from "./features/quizes/ResultsPage";
 
 /**
  * TOD: remove once done
@@ -79,6 +80,7 @@ function App() {
         {/* Games page  */}
         <Route path="/games">
           <Route path="play" element={<GamePage />} />
+          <Route path="results" element={<ResultsPage />} />
         </Route>
       </Routes>
     </>
