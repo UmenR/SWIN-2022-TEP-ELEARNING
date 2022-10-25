@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { selectedGameQuizSelector } from "./quizSelectors";
+import ModalOverlay from "../../common/ModalOverlay";
 
 const Row = styled.div`
   display: flex;
@@ -66,28 +68,46 @@ const ANSWER_STATES = {
 
 function GamePage() {
   const currentQuiz = useSelector(selectedGameQuizSelector);
+  const navigate = useNavigate();
 
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const currentQuizIndexRef = useRef(0)
+  const currentQuizIndexRef = useRef(0);
   const [answers, setAnswers] = useState([]);
 
   const [isValid, setIsValid] = useState(false);
   const [answerState, setAnswerState] = useState(ANSWER_STATES.NO_ANSWER);
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalHeaderContent, setModalHeaderContent] = useState("");
+  const [modalBodyContent, setModalBodyContent] = useState("");
 
   function getButtonText() {
     if (answerState === ANSWER_STATES.NO_ANSWER) return "Check Answer";
     return "Next";
   }
 
-  function clearAnswerState(){
+  function clearAnswerState() {
     setIsValid(false);
     setAnswers([]);
     setAnswerState(ANSWER_STATES.NO_ANSWER);
+    setModalBodyContent("");
+    setModalHeaderContent("");
+    setShowModal(false);
+  }
+
+  function proceed() {
+    console.log(currentQuizIndexRef.current < currentQuiz.questions.length - 1)
+    if (currentQuizIndexRef.current < currentQuiz.questions.length - 1) {
+      currentQuizIndexRef.current = currentQuizIndexRef.current + 1;
+      setCurrentQuestion(currentQuiz.questions[currentQuizIndexRef.current]);
+    } else {
+      navigate("/games/results");
+    }
   }
 
   function startQuiz() {
     setCurrentQuestion(currentQuiz.questions[currentQuizIndexRef.current]);
-    clearAnswerState()
+    clearAnswerState();
   }
 
   function setValidity() {
@@ -100,9 +120,9 @@ function GamePage() {
 
   function clickAnswer(id) {
     // Answer already exists
-    const answerIndex = answers.findIndex((element) => id === element)
-    console.log(answerIndex)
-    if ( answerIndex > -1) {
+    const answerIndex = answers.findIndex((element) => id === element);
+    console.log(answerIndex);
+    if (answerIndex > -1) {
       answers.splice(answerIndex, 1);
       setAnswers([...answers]);
     } else {
@@ -115,99 +135,119 @@ function GamePage() {
     return answers.findIndex((element) => index === element) > -1;
   }
 
-  function checkAnswerValidity(){
-    let isCorrect = false
-    for(const answer of answers){
-      let isValid = false
-      for(const solution of currentQuestion.solutions){
-        if(solution.id === answer) {
+  function checkAnswerValidity() {
+    let isCorrect = false;
+    for (const answer of answers) {
+      let isValid = false;
+      for (const solution of currentQuestion.solutions) {
+        if (solution.id === answer) {
           isValid = true;
         }
       }
-      if(!isValid){
-        isCorrect = false
+      if (!isValid) {
+        isCorrect = false;
         break;
       }
       isCorrect = true;
     }
-    return isCorrect
+    return isCorrect;
   }
 
-  function clickCheckValidity(){
-    if(checkAnswerValidity()){
-      currentQuizIndexRef.current = currentQuizIndexRef.current + 1
-      setCurrentQuestion(currentQuiz.questions[currentQuizIndexRef.current]);
-      clearAnswerState()
+  function clickCheckValidity() {
+    const result = checkAnswerValidity();
+    if (result) {
+      // TODO handle this accordingly
+      setModalHeaderContent("Your answer is correct!");
+    } else {
+      setModalHeaderContent("Your answer is Incorrect");
+      setModalBodyContent("Correct answer is 5");
     }
+    setShowModal(true);
   }
 
+  function onCloseModal() {
+    clearAnswerState();
+    proceed();
+  }
 
   useEffect(() => {
     setValidity();
   });
 
   return (
-    <Container>
-      <TitleRow>
-        {currentQuestion ? (
-          <h1>{currentQuestion.text}</h1>
-        ) : (
-          <h1>Click Start to Begin</h1>
+    <>
+      <Container>
+        <TitleRow>
+          {currentQuestion ? (
+            <h1>{currentQuestion.text}</h1>
+          ) : (
+            <h1>Click Start to Begin</h1>
+          )}
+        </TitleRow>
+        {currentQuestion && (
+          <>
+            <AnswerRow>
+              <Col>
+                <AnswerButton
+                  isSelected={isSelected(currentQuestion.answers[0].id)}
+                  onClick={() => clickAnswer(currentQuestion.answers[0].id)}
+                >
+                  <AnswerText>{currentQuestion.answers[0].text}</AnswerText>
+                </AnswerButton>
+              </Col>
+              <Col>
+                <AnswerButton
+                  isSelected={isSelected(currentQuestion.answers[1].id)}
+                  onClick={() => clickAnswer(currentQuestion.answers[1].id)}
+                >
+                  <AnswerText>{currentQuestion.answers[1].text}</AnswerText>
+                </AnswerButton>
+              </Col>
+            </AnswerRow>
+            <AnswerRow>
+              <Col>
+                <AnswerButton
+                  isSelected={isSelected(currentQuestion.answers[2].id)}
+                  onClick={() => clickAnswer(currentQuestion.answers[2].id)}
+                >
+                  <AnswerText>{currentQuestion.answers[2].text}</AnswerText>
+                </AnswerButton>
+              </Col>
+              <Col>
+                <AnswerButton
+                  isSelected={isSelected(currentQuestion.answers[3].id)}
+                  onClick={() => clickAnswer(currentQuestion.answers[3].id)}
+                >
+                  <AnswerText>{currentQuestion.answers[3].text}</AnswerText>
+                </AnswerButton>
+              </Col>
+            </AnswerRow>
+            <Row>
+              <StyledButton
+                onClick={clickCheckValidity}
+                disabled={!isValid}
+                type="button"
+              >
+                {getButtonText()}
+              </StyledButton>
+            </Row>
+          </>
         )}
-      </TitleRow>
-      {currentQuestion && (
-        <>
-          <AnswerRow>
-            <Col>
-              <AnswerButton
-                isSelected={isSelected(currentQuestion.answers[0].id)}
-                onClick={() => clickAnswer(currentQuestion.answers[0].id)}
-              >
-                <AnswerText>{currentQuestion.answers[0].text}</AnswerText>
-              </AnswerButton>
-            </Col>
-            <Col>
-              <AnswerButton
-                isSelected={isSelected(currentQuestion.answers[1].id)}
-                onClick={() => clickAnswer(currentQuestion.answers[1].id)}
-              >
-                <AnswerText>{currentQuestion.answers[1].text}</AnswerText>
-              </AnswerButton>
-            </Col>
-          </AnswerRow>
-          <AnswerRow>
-            <Col>
-              <AnswerButton
-                isSelected={isSelected(currentQuestion.answers[2].id)}
-                onClick={() => clickAnswer(currentQuestion.answers[2].id)}
-              >
-                <AnswerText>{currentQuestion.answers[2].text}</AnswerText>
-              </AnswerButton>
-            </Col>
-            <Col>
-              <AnswerButton
-                isSelected={isSelected(currentQuestion.answers[3].id)}
-                onClick={() => clickAnswer(currentQuestion.answers[3].id)}
-              >
-                <AnswerText>{currentQuestion.answers[3].text}</AnswerText>
-              </AnswerButton>
-            </Col>
-          </AnswerRow>
+        {!currentQuestion && (
           <Row>
-            <StyledButton onClick={clickCheckValidity} disabled={!isValid} type="button">
-              {getButtonText()}
+            <StyledButton type="button" onClick={startQuiz}>
+              Start Quiz
             </StyledButton>
           </Row>
-        </>
-      )}
-      {!currentQuestion && (
-        <Row>
-          <StyledButton type="button" onClick={startQuiz}>
-            Start Quiz
-          </StyledButton>
-        </Row>
-      )}
-    </Container>
+        )}
+      </Container>
+      <ModalOverlay
+        isOpen={showModal}
+        handleClose={onCloseModal}
+        header={modalHeaderContent}
+        body={modalBodyContent}
+      />
+    </>
   );
 }
 
