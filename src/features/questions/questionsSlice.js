@@ -6,7 +6,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { wait } from "../../utils/miscUtils";
 
-const MOCK_QUESTIONS = [
+export const MOCK_QUESTIONS = [
   {
     id: 1,
     text: "what is 2+2",
@@ -28,6 +28,12 @@ const MOCK_QUESTIONS = [
         text: 5,
       },
     ],
+    solutions: [
+      {
+        id: 3,
+        text: 4,
+      },
+    ] 
   },
   {
     id: 2,
@@ -50,6 +56,12 @@ const MOCK_QUESTIONS = [
         text: 5,
       },
     ],
+    solutions: [
+      {
+        id: 2,
+        text: 3,
+      },
+    ] 
   },
 ];
 

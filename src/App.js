@@ -9,6 +9,7 @@ import ProtectedRoute from "./common/Protected";
 
 import { api } from "./api/Request";
 import QuestionsList from "./features/questions/QuestionsList";
+import GamePage from "./features/quizes/GamePage";
 
 /**
  * TOD: remove once done
@@ -51,6 +52,9 @@ function App() {
         <div>
           <Link to="/questions/add">questions</Link>
         </div>
+        <div>
+          <Link to="/games/play">questions</Link>
+        </div>
       </NavList>
       <Routes>
         <Route path="/home" element={<HomePage />} />
@@ -69,6 +73,10 @@ function App() {
         <Route path="/questions">
           <Route path="add" element={<QuestionsPage />} />
           <Route path="list" element={<QuestionsList />} />
+        </Route>
+        {/* Games page  */}
+        <Route path="/games">
+          <Route path="play" element={<GamePage />} />
         </Route>
       </Routes>
     </>
