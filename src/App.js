@@ -10,6 +10,7 @@ import ProtectedRoute from "./common/Protected";
 import { api } from "./api/Request";
 import QuestionsList from "./features/questions/QuestionsList";
 import GamePage from "./features/quizes/GamePage";
+import CreateQuiz from "./features/quizes/CreateQuiz";
 
 /**
  * TOD: remove once done
@@ -68,6 +69,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="add" element={<CreateQuiz />} />
         </Route>
         {/* Questions page  */}
         <Route path="/questions">

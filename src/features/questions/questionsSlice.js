@@ -6,6 +6,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { wait } from "../../utils/miscUtils";
 
+export const DIFICULTY_LEVEL = {
+  EASY:1,
+  MODERATE:2,
+  HARD:3
+}
+
 export const MOCK_QUESTIONS = [
   {
     id: 1,
@@ -33,7 +39,8 @@ export const MOCK_QUESTIONS = [
         id: 3,
         text: 4,
       },
-    ] 
+    ],
+    dificulty: DIFICULTY_LEVEL.EASY
   },
   {
     id: 2,
@@ -61,7 +68,8 @@ export const MOCK_QUESTIONS = [
         id: 2,
         text: 3,
       },
-    ] 
+    ],
+    dificulty: DIFICULTY_LEVEL.MODERATE 
   },
 ];
 
