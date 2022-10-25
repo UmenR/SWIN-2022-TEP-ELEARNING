@@ -25,10 +25,8 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function QuestionListView({ setValues, values }) {
  
 function onCheck(id){
-    console.log('---')
     setValues({...values,questions:values.questions.map(item => {
         if(item.id === id){
-            console.log('-  selected')
             return {...item,selected:!item.selected}
         }
         return {...item}

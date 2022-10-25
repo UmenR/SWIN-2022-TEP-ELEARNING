@@ -38,7 +38,7 @@ const QuestionListContainer = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 200px;
-  min-width: 8s00px;
+  min-width: 800px;
   padding: 10px;
   flex: 1;
 `;
@@ -62,8 +62,7 @@ export default function CreateQuiz() {
   };
 
   function doSubmit(values){
-    console.log('---')
-    console.log(values)
+    // TODO: handle submit
   }
 
   // fetch list of questions on initial render.
@@ -72,7 +71,6 @@ export default function CreateQuiz() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(currentQuestions);
   return (
     <>
       {(!currentQuestions || currentQuestions.length <= 0) && (
