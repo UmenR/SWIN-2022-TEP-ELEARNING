@@ -10,6 +10,7 @@ import { MOCK_QUESTIONS } from "../questions/questionsSlice";
 const MOCK_QUIZZES = [
     {
         id:1,
+        description:'test quiz',
         questions: MOCK_QUESTIONS
     }
 ]
