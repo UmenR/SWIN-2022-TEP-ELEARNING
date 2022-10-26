@@ -8488,6 +8488,13 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-progress-stepper@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-progress-stepper/-/react-progress-stepper-0.2.2.tgz#fd1de9177c373226965289343e73d3dbce3c0ba2"
+  integrity sha512-YkkBD/J1WOOT7k27QwJG12o9T4Z7QyIp6RNjrvS1hmoGzJfFb/FbCq0jEhycU95Dd8JeGQ3SAEYa85d/04A/DA==
+  dependencies:
+    styled-components "^5.3.0"
+
 react-redux@^8.0.4:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.4.tgz#80c31dffa8af9526967c4267022ae1525ff0e36a"
@@ -9406,7 +9413,7 @@ style-loader@^3.3.1:
   resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-3.3.1.tgz#057dfa6b3d4d7c7064462830f9113ed417d38575"
   integrity sha512-GPcQ+LDJbrcxHORTRes6Jy2sfvK2kS6hpSfI/fXhPt+spVzxF6LJ1dHLN9zIGmVaaP044YKaIatFaufENRiDoQ==
 
-styled-components@^5, styled-components@^5.3.6:
+styled-components@^5, styled-components@^5.3.0, styled-components@^5.3.6:
   version "5.3.6"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.3.6.tgz#27753c8c27c650bee9358e343fc927966bfd00d1"
   integrity sha512-hGTZquGAaTqhGWldX7hhfzjnIYBZ0IXQXkCYdvF1Sq3DsUaLx6+NTHC5Jj1ooM2F68sBiVz3lvhfwQs/S3l6qg==
