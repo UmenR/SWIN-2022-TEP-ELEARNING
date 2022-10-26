@@ -4,6 +4,7 @@ import authenticationSlice from './authentication/authenticationSlice'
 import counterSlice from './counterSlice'
 import questionsSlice from '../features/questions/questionsSlice'
 import quizSlice from '../features/quizes/quizSlice'
+import rewardResultSlice from '../features/rewards/rewardResultSlice'
 
 
 const combinedReducer = combineReducers({
@@ -11,6 +12,7 @@ const combinedReducer = combineReducers({
     authentication:authenticationSlice,
     questions:questionsSlice,
     quizzes:quizSlice,
+    rewards:rewardResultSlice,
 })
 
 function rootReducer(state, action) {

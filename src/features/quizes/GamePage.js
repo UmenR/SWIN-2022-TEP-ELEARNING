@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { selectedGameQuizSelector } from "./quizSelectors";
 import ModalOverlay from "../../common/ModalOverlay";
+import { getStars, hasStar } from "../rewards/rewardUtils";
 
 const Row = styled.div`
   display: flex;
@@ -81,6 +82,10 @@ function GamePage() {
   const [modalHeaderContent, setModalHeaderContent] = useState("");
   const [modalBodyContent, setModalBodyContent] = useState("");
 
+  const [correctCount, setCorrectCount] = useState(0);
+  const [starScore, setStarScore] = useState(0);
+  const [shouldShowStar, setShouldShowStar] = useState(false);
+
   function getButtonText() {
     if (answerState === ANSWER_STATES.NO_ANSWER) return "Check Answer";
     return "Next";
@@ -93,15 +98,21 @@ function GamePage() {
     setModalBodyContent("");
     setModalHeaderContent("");
     setShowModal(false);
+    setShouldShowStar(false);
   }
 
   function proceed() {
-    console.log(currentQuizIndexRef.current < currentQuiz.questions.length - 1)
     if (currentQuizIndexRef.current < currentQuiz.questions.length - 1) {
       currentQuizIndexRef.current = currentQuizIndexRef.current + 1;
       setCurrentQuestion(currentQuiz.questions[currentQuizIndexRef.current]);
     } else {
-      navigate("/games/results");
+      navigate("/games/results", {
+        state: {
+          score: correctCount,
+          quiz: currentQuiz,
+          stars: getStars(currentQuiz.questions.length, correctCount),
+        },
+      });
     }
   }
 
@@ -156,6 +167,11 @@ function GamePage() {
   function clickCheckValidity() {
     const result = checkAnswerValidity();
     if (result) {
+      setCorrectCount(correctCount + 1);
+      if (hasStar(currentQuiz.questions.length, starScore, correctCount + 1)) {
+        setShouldShowStar(true);
+        setStarScore(correctCount + 1);
+      }
       // TODO handle this accordingly
       setModalHeaderContent("Your answer is correct!");
     } else {
@@ -246,6 +262,7 @@ function GamePage() {
         handleClose={onCloseModal}
         header={modalHeaderContent}
         body={modalBodyContent}
+        showReward={shouldShowStar}
       />
     </>
   );
