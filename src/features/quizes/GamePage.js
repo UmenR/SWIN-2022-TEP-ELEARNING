@@ -1,54 +1,55 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {Button, Card, Col, Row} from 'antd'
 
-import { selectedGameQuizSelector } from "./quizSelectors";
+import {selectedGameQuizSelector} from "./quizSelectors";
 import ModalOverlay from "../../common/ModalOverlay";
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-const Col = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 2px solid grey;
-  height: 100%;
-  padding: 10px;
-`;
-
-const TitleRow = styled(Row)`
-    height: 100px;
-    width: 100%
-    background: black;
-`;
-
-const StyledButton = styled.button`
-  height: 50px;
-  width: 200px;
-  background: red;
-  margin-top: 20px;
-`;
-
-const AnswerButton = styled.div`
-  height: 200px;
-  width: 200px;
-  background: ${(props) => (props.isSelected ? `yellow` : `green`)};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
+// const Row = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: center;
+// `;
+// const Col = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+// `;
+//
+// const Container = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   border: 2px solid grey;
+//   height: 100%;
+//   padding: 10px;
+// `;
+//
+// const TitleRow = styled(Row)`
+//     height: 100px;
+//     width: 100%
+//     background: black;
+// `;
+//
+// const StyledButton = styled.button`
+//   height: 50px;
+//   width: 200px;
+//   background: red;
+//   margin-top: 20px;
+// `;
+//
+// const AnswerButton = styled.div`
+//   height: 200px;
+//   width: 200px;
+//   background: ${(props) => (props.isSelected ? `yellow` : `green`)};
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
+//
 const AnswerRow = styled(Row)`
   padding-left: 20%;
   padding-right: 20%;
@@ -57,7 +58,7 @@ const AnswerRow = styled(Row)`
 `;
 
 const AnswerText = styled.h1`
-  color: red;
+  color: black;
 `;
 
 const ANSWER_STATES = {
@@ -65,6 +66,7 @@ const ANSWER_STATES = {
   CORRECT: 2,
   WRONG: 3,
 };
+
 
 function GamePage() {
   const currentQuiz = useSelector(selectedGameQuizSelector);
@@ -175,79 +177,72 @@ function GamePage() {
   });
 
   return (
-    <>
-      <Container>
-        <TitleRow>
-          {currentQuestion ? (
-            <h1>{currentQuestion.text}</h1>
-          ) : (
-            <h1>Click Start to Begin</h1>
-          )}
-        </TitleRow>
+      <Card title={currentQuestion ? (
+          <h1>{currentQuestion.text}</h1>
+      ) : (
+          <h1>Click Start to Begin</h1>
+      )} align="center">
         {currentQuestion && (
-          <>
-            <AnswerRow>
-              <Col>
-                <AnswerButton
-                  isSelected={isSelected(currentQuestion.answers[0].id)}
-                  onClick={() => clickAnswer(currentQuestion.answers[0].id)}
+            <Row justify="center">
+              <Col span={6}>
+                <Button
+                    isSelected={isSelected(currentQuestion.answers[0].id)}
+                    onClick={() => clickAnswer(currentQuestion.answers[0].id)}
                 >
                   <AnswerText>{currentQuestion.answers[0].text}</AnswerText>
-                </AnswerButton>
+                </Button>
               </Col>
-              <Col>
-                <AnswerButton
-                  isSelected={isSelected(currentQuestion.answers[1].id)}
-                  onClick={() => clickAnswer(currentQuestion.answers[1].id)}
+              <Col span={6}>
+                <Button
+                    isSelected={isSelected(currentQuestion.answers[1].id)}
+                    onClick={() => clickAnswer(currentQuestion.answers[1].id)}
                 >
                   <AnswerText>{currentQuestion.answers[1].text}</AnswerText>
-                </AnswerButton>
+                </Button>
               </Col>
-            </AnswerRow>
-            <AnswerRow>
-              <Col>
-                <AnswerButton
-                  isSelected={isSelected(currentQuestion.answers[2].id)}
-                  onClick={() => clickAnswer(currentQuestion.answers[2].id)}
+              <Col span={6}>
+                <Button
+                    isSelected={isSelected(currentQuestion.answers[2].id)}
+                    onClick={() => clickAnswer(currentQuestion.answers[2].id)}
                 >
                   <AnswerText>{currentQuestion.answers[2].text}</AnswerText>
-                </AnswerButton>
+                </Button>
               </Col>
-              <Col>
-                <AnswerButton
-                  isSelected={isSelected(currentQuestion.answers[3].id)}
-                  onClick={() => clickAnswer(currentQuestion.answers[3].id)}
+              <Col span={6}>
+                <Button
+                    isSelected={isSelected(currentQuestion.answers[3].id)}
+                    onClick={() => clickAnswer(currentQuestion.answers[3].id)}
                 >
                   <AnswerText>{currentQuestion.answers[3].text}</AnswerText>
-                </AnswerButton>
+                </Button>
               </Col>
-            </AnswerRow>
-            <Row>
-              <StyledButton
-                onClick={clickCheckValidity}
-                disabled={!isValid}
-                type="button"
-              >
-                {getButtonText()}
-              </StyledButton>
             </Row>
-          </>
         )}
+        <Row justify="center">
+          <Button
+              onClick={clickCheckValidity}
+              disabled={!isValid}
+              type="button"
+          >
+            {getButtonText()}
+          </Button>
+        </Row>
+
         {!currentQuestion && (
-          <Row>
-            <StyledButton type="button" onClick={startQuiz}>
-              Start Quiz
-            </StyledButton>
-          </Row>
+            <Row>
+              <Button type="button" onClick={startQuiz}>
+                Start Quiz
+              </Button>
+            </Row>
         )}
-      </Container>
-      <ModalOverlay
-        isOpen={showModal}
-        handleClose={onCloseModal}
-        header={modalHeaderContent}
-        body={modalBodyContent}
-      />
-    </>
+
+        <ModalOverlay
+            isOpen={showModal}
+            handleClose={onCloseModal}
+            header={modalHeaderContent}
+            body={modalBodyContent}
+        />
+      </Card>
   );
 }
 
