@@ -48,6 +48,7 @@ export const loginUser = createAsyncThunk(
             },
           })
         );
+        return true
       } catch (err) {
         // TODO: Show error toast
       }
