@@ -22,19 +22,21 @@ import { authenticationStatusSelector } from "../../store/authentication/authent
 const theme = createTheme();
 
 function Login() {
-
-  const authStatus = useSelector(authenticationStatusSelector)
+  const authStatus = useSelector(authenticationStatusSelector);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isTeacherLogin, setIsTeacherLogin] = useState(true);
   const dispatch = useDispatch();
 
-  async function onPressLogin() {
+  async function onPressLogin(username, password) {
     const result = await dispatch(
       loginUser({
-        username: "someUsername",
-        password: "somePassword",
-        userType: USER_AUTH_TYPE.teacher,
+        username,
+        ...(isTeacherLogin && password),
+        userType: isTeacherLogin
+          ? USER_AUTH_TYPE.teacher
+          : USER_AUTH_TYPE.student,
       })
     ).unwrap();
     setIsLoading(false);
@@ -47,21 +49,18 @@ function Login() {
 
   const handleSubmit = (event) => {
     setIsLoading(true);
-    setHasError(false)
+    setHasError(false);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    onPressLogin();
+
+    onPressLogin(data.get("email"), data.get("password"));
   };
 
-  useEffect(()=>{
-    if(authStatus !== USER_AUTH_TYPE.none){
-        navigate("/home");
+  useEffect(() => {
+    if (authStatus !== USER_AUTH_TYPE.none) {
+      navigate("/home");
     }
-  })
+  });
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -79,8 +78,15 @@ function Login() {
             style={{ marginRight: "10px" }}
             label="Student Login"
             color="primary"
+            variant={!isTeacherLogin ? "filled" : "outlined"}
+            onClick={() => setIsTeacherLogin(false)}
           />
-          <Chip label="Teacher Login" color="primary" />
+          <Chip
+            label="Teacher Login"
+            color="primary"
+            variant={isTeacherLogin ? "filled" : "outlined"}
+            onClick={() => setIsTeacherLogin(true)}
+          />
         </Box>
         <Box
           sx={{
@@ -100,26 +106,30 @@ function Login() {
             noValidate
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+            <>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              {isTeacherLogin && (
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              )}
+            </>
             {hasError && (
               <Typography
                 display="flex"
