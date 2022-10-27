@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -21,20 +21,18 @@ import { quizzesSelector } from "./quizSelectors";
 const theme = createTheme();
 
 function GameListPage() {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const allQuizzes = useSelector(quizzesSelector);
-  
 
   function handleNavigation(quiz) {
-    dispatch(setSelectedGameQuiz({selectedGameQuiz:quiz}));
-    navigate('/games/play')
+    dispatch(setSelectedGameQuiz({ selectedGameQuiz: quiz }));
+    navigate("/games/play");
   }
 
-  useEffect(()=>{
-    dispatch(fetchQuizzes({}))
-  },[])
+  useEffect(() => {
+    dispatch(fetchQuizzes({}));
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -51,12 +49,17 @@ function GameListPage() {
           <Grid
             container
             rowSpacing={5}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
             {!allQuizzes ||
               (allQuizzes.length <= 0 && (
                 <>
-                  <Grid item xs={6}>
+                  <Grid
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    item
+                    xs={6}
+                  >
                     <Stack spacing={1}>
                       <Skeleton
                         variant="rectangular"
@@ -67,7 +70,13 @@ function GameListPage() {
                       <Skeleton variant="rounded" width={345} height={60} />
                     </Stack>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    item
+                    xs={6}
+                  >
                     <Stack spacing={1}>
                       <Skeleton
                         variant="rectangular"
@@ -83,11 +92,16 @@ function GameListPage() {
             {allQuizzes &&
               allQuizzes.length > 0 &&
               allQuizzes.map((quiz) => (
-                <Grid item xs={6} key={quiz.id}>
-                  <Card sx={{ maxWidth: 345, height: 300 }}>
-                    <CardActionArea
-                      onClick={() => handleNavigation(quiz)}
-                    >
+                <Grid
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  item
+                  xs={6}
+                  key={quiz.id}
+                >
+                  <Card sx={{ width: 345, height: 300 }}>
+                    <CardActionArea onClick={() => handleNavigation(quiz)}>
                       <CardMedia
                         component="img"
                         height="200"

@@ -1,4 +1,4 @@
-import { Breadcrumb, Layout, Menu } from "antd";
+import {  Layout, Menu } from "antd";
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
@@ -15,18 +15,9 @@ import GamePage from "./features/quizes/GamePage";
 import RewardTree from "./features/rewards/rewardTree";
 import GameListPage from "./features/quizes/GameListPage";
 
-const { Header, Content, Footer } = Layout;
+const { Header } = Layout;
 
 function App() {
-  async function testOnClick() {
-    const response = await api.get("/users", {
-      params: {
-        page: 2,
-      },
-    });
-    console.log(`data ${response.data}`);
-  }
-
   return (
     <Layout className="layout">
       <Header>

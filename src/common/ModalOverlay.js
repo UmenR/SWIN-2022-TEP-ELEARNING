@@ -36,10 +36,10 @@ export default function ModalOverlay({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h4" component="h2">
+          <Typography id="modal-modal-title" variant="h4" component="h1">
             {header}
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <Typography id="modal-modal-description"  marginTop={5} variant="h3" component="h3">
             {body}
           </Typography>
           {showReward && (
