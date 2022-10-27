@@ -24,6 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function QuestionListView({ setValues, values }) {
  
+console.log(values.questions)
 function onCheck(id){
     setValues({...values,questions:values.questions.map(item => {
         if(item.id === id){
@@ -41,7 +42,7 @@ function onCheck(id){
             values.questions.map((question,i) => {
               return (
                 <Item key={question.id}>
-                  <Checkbox value={question.selected}  onChange={()=>onCheck(question.id)}/>
+                  <Checkbox  checked={question.selected}  onChange={()=>onCheck(question.id)}/>
                   {question.text}
                 </Item>
               );

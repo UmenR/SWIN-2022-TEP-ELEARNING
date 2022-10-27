@@ -1,21 +1,23 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+
 import { styled as mStyled } from "@mui/material/styles";
 import { Formik } from "formik";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 import QuestionListView from "../questions/QuestionListView";
 import { questionsSelector } from "../questions/questionsSelectors";
 import { fetchQuestions } from "../questions/questionsSlice";
-
-
+import { selectedQuizSelector } from "./quizSelectors";
+import { setSelectedQuiz } from "./quizSlice";
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  border: 2px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,40 +46,66 @@ const QuestionListContainer = styled.div`
 `;
 
 const StyledButton = mStyled(Button)(({ theme }) => ({
-    width:100,
-    height: 50,
-    margin: 20,
-  }));
+  width: 100,
+  height: 50,
+  margin: 20,
+}));
 
 export default function CreateQuiz() {
   const currentQuestions = useSelector(questionsSelector);
+  const currentQuiz = useSelector(selectedQuizSelector);
+
   const dispatch = useDispatch();
 
+  function isSelected(question, quiz) {
+    if (quiz.questions?.find((element) => element.id === question.id)) {
+      console.log(question);
+      console.log(quiz.questions);
+      return true;
+    }
+    return false;
+  }
+
   const initialFormValues = {
-    title: "",
+    title: currentQuiz ? currentQuiz.title : "",
+    description: currentQuiz ? currentQuiz.description : "",
     questions: currentQuestions.map((question) => ({
       ...question,
-      selected: false,
+      selected: currentQuiz ? isSelected(question, currentQuiz) : false,
     })),
   };
 
-  function doSubmit(values){
+  function doSubmit(values) {
     // TODO: handle submit
+    console.log(`--- values`);
+    console.log(values);
   }
 
   // fetch list of questions on initial render.
   useEffect(() => {
     dispatch(fetchQuestions({}));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return function cleanup() {
+      dispatch(setSelectedQuiz({ selectedQuiz: null }));
+    };
   }, []);
 
   return (
     <>
       {(!currentQuestions || currentQuestions.length <= 0) && (
-        <h1>Loading...</h1>
+        <Stack sx={{ marginTop: 10 }} spacing={5}>
+          <Skeleton variant="rectangular" height={60} />
+          <Skeleton variant="rectangular" height={60} />
+          <Skeleton variant="rectangular" height={60} />
+          <Skeleton variant="rectangular" height={60} />
+        </Stack>
       )}
+
       {currentQuestions && currentQuestions.length > 0 && (
-        <Formik initialValues={initialFormValues} onSubmit={values=>doSubmit(values)}>
+        <Formik
+          initialValues={initialFormValues}
+          onSubmit={(values) => doSubmit(values)}
+        >
           {({ values, setValues, handleSubmit, handleChange }) => {
             return (
               <Container>
@@ -85,13 +113,23 @@ export default function CreateQuiz() {
                   <TextField
                     fullWidth
                     id="title"
+                    label="title"
+                    variant="outlined"
+                    name="title"
+                    onChange={handleChange}
+                    value={values.title}
+                    sx={{ marginBottom: 5, marginTop: 5 }}
+                  />
+                  <TextField
+                    fullWidth
+                    id="description"
                     label="Description"
                     variant="outlined"
                     multiline
                     rows={4}
-                    name="title"
+                    name="description"
                     onChange={handleChange}
-                    value={values.title}
+                    value={values.description}
                   />
                 </CreateQuizContainer>
                 <QuestionListContainer>
@@ -101,8 +139,12 @@ export default function CreateQuiz() {
                     values={values}
                   />
                 </QuestionListContainer>
-                <StyledButton onClick={handleSubmit} variant="contained" type="submit">
-                    Submit
+                <StyledButton
+                  onClick={handleSubmit}
+                  variant="contained"
+                  type="submit"
+                >
+                  Submit
                 </StyledButton>
               </Container>
             );
