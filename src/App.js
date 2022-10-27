@@ -1,6 +1,7 @@
-import {  Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Login from "./features/login/Login";
 import HomePage from "./features/home/Home";
@@ -10,32 +11,38 @@ import ProtectedRoute from "./common/Protected";
 import CreateQuiz from "./features/quizes/CreateQuiz";
 import ResultsPage from "./features/quizes/ResultsPage";
 import QuestionsList from "./features/questions/QuestionsList";
-import { api } from "./api/Request";
 import GamePage from "./features/quizes/GamePage";
 import RewardTree from "./features/rewards/rewardTree";
 import GameListPage from "./features/quizes/GameListPage";
+import { authenticationStatusSelector } from "./store/authentication/authenticationSelectors";
+import { USER_AUTH_TYPE } from "./store/authentication/authenticationSlice";
 
 const { Header } = Layout;
 
 function App() {
+  const authStatus = useSelector(authenticationStatusSelector);
+
   return (
     <Layout className="layout">
       <Header>
         <div className="logo" />
         <Menu theme="dark" mode="horizontal">
-          <Menu.Item key="home">
-            <Link to="/home">home</Link>
-          </Menu.Item>
-          <Menu.Item key="login">
-            <Link to="/login">login</Link>
-          </Menu.Item>
-          <Menu.Item key="quizzes/list">
-            <Link to="/quizzes/list">quizes</Link>
-          </Menu.Item>
+          {(authStatus === USER_AUTH_TYPE.teacher ||
+            authStatus === USER_AUTH_TYPE.student) && (
+              <Menu.Item key="home">
+                <Link to="/home">home</Link>
+              </Menu.Item>
+            )}
+          {authStatus === USER_AUTH_TYPE.teacher && (
+            <Menu.Item key="quizzes/list">
+              <Link to="/quizzes/list">quizes</Link>
+            </Menu.Item>
+          )}
         </Menu>
       </Header>
       <Routes>
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/quizzes">
           <Route
@@ -57,7 +64,7 @@ function App() {
         <Route path="/games">
           <Route path="play" element={<GamePage />} />
           <Route path="results" element={<ResultsPage />} />
-          <Route path="list" element={<GameListPage/>} />
+          <Route path="list" element={<GameListPage />} />
         </Route>
         {/* Reward Tree Oage */}
         <Route path="/rewards">
