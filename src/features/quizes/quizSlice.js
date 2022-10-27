@@ -25,6 +25,7 @@ const MOCK_QUIZZES = [
 
 const initialState = {
   quizzes: [],
+  selectedQuiz:null,
   selectedGameQuiz: null,
 };
 
@@ -35,13 +36,17 @@ export const quizzesSlice = createSlice({
     setSelectedGameQuiz: (state, action) => {
       state.selectedGameQuiz = action.payload.selectedGameQuiz;
     },
+    setSelectedQuiz: (state, action) => {
+      state.selectedQuiz = action.payload.selectedQuiz;
+    },
     setQuizzes: (state, action) => {
       state.quizzes = action.payload.quizzes;
     },
+
   },
 });
 
-export const { setSelectedGameQuiz, setQuizzes } = quizzesSlice.actions;
+export const { setSelectedGameQuiz, setQuizzes, setSelectedQuiz } = quizzesSlice.actions;
 
 export const fetchQuizzes = createAsyncThunk(
   `quizzes/get`,

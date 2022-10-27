@@ -54,6 +54,7 @@ function App() {
             }
           />
           <Route path="add" element={<CreateQuiz />} />
+          <Route path="edit" element={<CreateQuiz />} />
         </Route>
         {/* Questions page  */}
         <Route path="/questions">
