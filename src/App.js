@@ -13,6 +13,7 @@ import QuestionsList from "./features/questions/QuestionsList";
 import { api } from "./api/Request";
 import GamePage from "./features/quizes/GamePage";
 import RewardTree from "./features/rewards/rewardTree";
+import GameListPage from "./features/quizes/GameListPage";
 
 const { Header, Content, Footer } = Layout;
 
@@ -65,6 +66,7 @@ function App() {
         <Route path="/games">
           <Route path="play" element={<GamePage />} />
           <Route path="results" element={<ResultsPage />} />
+          <Route path="list" element={<GameListPage/>} />
         </Route>
         {/* Reward Tree Oage */}
         <Route path="/rewards">
