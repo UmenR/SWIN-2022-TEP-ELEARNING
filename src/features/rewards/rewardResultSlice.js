@@ -12,13 +12,39 @@ const initialState = {
   scores: {},
 };
 
-// 1: {
+// studentID1:{
+//   rank:1,
+//   totalStars: 4,
+//   totalScore: 15,
+//   completed:{
+//     quizID1: {
 //       score: 10,
 //       questions: 20,
 //       correct: 10,
 //       incorrect: 10,
 //       stars: 2,
 //     },
+//     quizID2: {
+//       score: 5,
+//       questions: 10,
+//       correct: 5,
+//       incorrect: 5,
+//       stars: 2,
+//     },
+// }
+// }
+
+// studentID1:{
+//     1: {
+//       score: 10,
+//       questions: 20,
+//       correct: 10,
+//       incorrect: 10,
+//       stars: 2,
+//     }
+// }
+// }
+
 
 export const rewardSlice = createSlice({
   name: "rewards",
