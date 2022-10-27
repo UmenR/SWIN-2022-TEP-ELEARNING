@@ -28,7 +28,7 @@ function GameListPage() {
   
 
   function handleNavigation(quiz) {
-    dispatch(setSelectedGameQuiz({quiz}));
+    dispatch(setSelectedGameQuiz({selectedGameQuiz:quiz}));
     navigate('/games/play')
   }
 

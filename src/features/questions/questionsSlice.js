@@ -100,94 +100,97 @@ export const MOCK_QUESTIONS = [
     ],
     dificulty: DIFICULTY_LEVEL.MODERATE 
   },
-  // {
-  //   id: 4,
-  //   text: "what is 10+1",
-  //   answers: [
-  //     {
-  //       id: 1,
-  //       text: 11,
-  //     },
-  //     {
-  //       id: 2,
-  //       text: 3,
-  //     },
-  //     {
-  //       id: 3,
-  //       text: 4,
-  //     },
-  //     {
-  //       id: 4,
-  //       text: 5,
-  //     },
-  //   ],
-  //   solutions: [
-  //     {
-  //       id: 1,
-  //       text: 11,
-  //     },
-  //   ],
-  //   dificulty: DIFICULTY_LEVEL.MODERATE 
-  // },
-  // {
-  //   id: 4,
-  //   text: "what is 12+1",
-  //   answers: [
-  //     {
-  //       id: 1,
-  //       text: 13,
-  //     },
-  //     {
-  //       id: 2,
-  //       text: 3,
-  //     },
-  //     {
-  //       id: 3,
-  //       text: 4,
-  //     },
-  //     {
-  //       id: 4,
-  //       text: 5,
-  //     },
-  //   ],
-  //   solutions: [
-  //     {
-  //       id: 1,
-  //       text: 13,
-  //     },
-  //   ],
-  //   dificulty: DIFICULTY_LEVEL.MODERATE 
-  // },
-  // {
-  //   id: 4,
-  //   text: "what is 20+1",
-  //   answers: [
-  //     {
-  //       id: 1,
-  //       text: 21,
-  //     },
-  //     {
-  //       id: 2,
-  //       text: 3,
-  //     },
-  //     {
-  //       id: 3,
-  //       text: 4,
-  //     },
-  //     {
-  //       id: 4,
-  //       text: 5,
-  //     },
-  //   ],
-  //   solutions: [
-  //     {
-  //       id: 1,
-  //       text: 21,
-  //     },
-  //   ],
-  //   dificulty: DIFICULTY_LEVEL.MODERATE 
-  // },
 ];
+
+export const MOCK_QUESTIONS2 = [
+  {
+    id: 4,
+    text: "what is 10+1",
+    answers: [
+      {
+        id: 1,
+        text: 11,
+      },
+      {
+        id: 2,
+        text: 3,
+      },
+      {
+        id: 3,
+        text: 4,
+      },
+      {
+        id: 4,
+        text: 5,
+      },
+    ],
+    solutions: [
+      {
+        id: 1,
+        text: 11,
+      },
+    ],
+    dificulty: DIFICULTY_LEVEL.MODERATE 
+  },
+  {
+    id: 4,
+    text: "what is 12+1",
+    answers: [
+      {
+        id: 1,
+        text: 13,
+      },
+      {
+        id: 2,
+        text: 3,
+      },
+      {
+        id: 3,
+        text: 4,
+      },
+      {
+        id: 4,
+        text: 5,
+      },
+    ],
+    solutions: [
+      {
+        id: 1,
+        text: 13,
+      },
+    ],
+    dificulty: DIFICULTY_LEVEL.MODERATE 
+  },
+  {
+    id: 4,
+    text: "what is 20+1",
+    answers: [
+      {
+        id: 1,
+        text: 21,
+      },
+      {
+        id: 2,
+        text: 3,
+      },
+      {
+        id: 3,
+        text: 4,
+      },
+      {
+        id: 4,
+        text: 5,
+      },
+    ],
+    solutions: [
+      {
+        id: 1,
+        text: 21,
+      },
+    ],
+    dificulty: DIFICULTY_LEVEL.MODERATE 
+  },
+]
 
 
 const initialState = {

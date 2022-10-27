@@ -3,11 +3,10 @@
  * managing the state related to quizzes.
  */
 
-import { SignalWifiStatusbarNull } from "@mui/icons-material";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { wait } from "../../utils/miscUtils";
 
-import { MOCK_QUESTIONS } from "../questions/questionsSlice";
+import { MOCK_QUESTIONS, MOCK_QUESTIONS2 } from "../questions/questionsSlice";
 
 const MOCK_QUIZZES = [
   {
@@ -16,6 +15,12 @@ const MOCK_QUIZZES = [
     title:"Addition practice - 1",
     questions: MOCK_QUESTIONS,
   },
+  {
+    id: 2,
+    description: "test quiz 2",
+    title:"Addition practice - 2",
+    questions: MOCK_QUESTIONS2,
+  }
 ];
 
 const initialState = {
@@ -28,8 +33,7 @@ export const quizzesSlice = createSlice({
   initialState,
   reducers: {
     setSelectedGameQuiz: (state, action) => {
-      // state.selectedGameQuiz = action.payload.selectedGameQuiz;
-      state.selectedGameQuiz = MOCK_QUIZZES[0];
+      state.selectedGameQuiz = action.payload.selectedGameQuiz;
     },
     setQuizzes: (state, action) => {
       state.quizzes = action.payload.quizzes;
