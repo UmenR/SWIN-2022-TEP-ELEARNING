@@ -7,6 +7,20 @@ import { selectedGameQuizSelector } from "./quizSelectors";
 import ModalOverlay from "../../common/ModalOverlay";
 import { getStars, hasStar } from "../rewards/rewardUtils";
 
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+
+const theme = createTheme();
+
 const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -18,14 +32,6 @@ const Col = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 2px solid grey;
-  height: 100%;
-  padding: 10px;
 `;
 
 const TitleRow = styled(Row)`
@@ -176,7 +182,7 @@ function GamePage() {
       setModalHeaderContent("Your answer is correct!");
     } else {
       setModalHeaderContent("Your answer is Incorrect");
-      setModalBodyContent("Correct answer is 5");
+      setModalBodyContent(`Correct Answer is ${currentQuestion.solutions[0].text}`);
     }
     setShowModal(true);
   }
@@ -192,17 +198,196 @@ function GamePage() {
 
   return (
     <>
-      <Container>
-        <TitleRow>
-          {currentQuestion ? (
-            <h1>{currentQuestion.text}</h1>
-          ) : (
-            <h1>Click Start to Begin</h1>
+      <Container component="main">
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 8,
+            marginBottom: 10,
+            marginLeft: 10,
+            marginRight: 10,
+            minHeight: 600,
+          }}
+        >
+          <TitleRow>
+            {currentQuestion ? (
+              <Typography
+                textAlign="center"
+                gutterBottom
+                variant="h2"
+                component="h2"
+                marginBottom={10}
+              >
+                {currentQuestion.text}
+              </Typography>
+            ) : (
+              <h1>Click Start to Begin : {currentQuiz?.title}</h1>
+            )}
+          </TitleRow>
+          {currentQuestion && (
+            <>
+              <Grid container rowSpacing={5}>
+                <Grid
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  item
+                  md={6}
+                >
+                  <Card
+                    sx={{
+                      width: 200,
+                      height: 200,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: isSelected(currentQuestion.answers[0].id)
+                        ? "1px solid #1890ff;"
+                        : "none",
+                    }}
+                  >
+                    <CardActionArea
+                      onClick={() => clickAnswer(currentQuestion.answers[0].id)}
+                    >
+                      <CardContent>
+                        <Typography
+                          textAlign="center"
+                          gutterBottom
+                          variant="h2"
+                          component="h2"
+                        >
+                          {currentQuestion.answers[0].text}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+                <Grid
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  item
+                  md={6}
+                >
+                  <Card
+                    sx={{
+                      width: 200,
+                      height: 200,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: isSelected(currentQuestion.answers[1].id)
+                        ? "1px solid #1890ff;"
+                        : "none",
+                    }}
+                  >
+                    <CardActionArea
+                      onClick={() => clickAnswer(currentQuestion.answers[1].id)}
+                    >
+                      <CardContent>
+                        <Typography
+                          textAlign="center"
+                          gutterBottom
+                          variant="h2"
+                          component="h2"
+                        >
+                          {currentQuestion.answers[1].text}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+                <Grid
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  item
+                  md={6}
+                >
+                  <Card
+                    sx={{
+                      width: 200,
+                      height: 200,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: isSelected(currentQuestion.answers[2].id)
+                        ? "1px solid #1890ff;"
+                        : "none",
+                    }}
+                  >
+                    <CardActionArea
+                      onClick={() => clickAnswer(currentQuestion.answers[2].id)}
+                    >
+                      <CardContent>
+                        <Typography
+                          textAlign="center"
+                          gutterBottom
+                          variant="h2"
+                          component="h2"
+                        >
+                          {currentQuestion.answers[2].text}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+                <Grid
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  item
+                  md={6}
+                >
+                  <Card
+                    sx={{
+                      width: 200,
+                      height: 200,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: isSelected(currentQuestion.answers[3].id)
+                        ? "1px solid #1890ff;"
+                        : "none",
+                    }}
+                  >
+                    <CardActionArea
+                      onClick={() => clickAnswer(currentQuestion.answers[3].id)}
+                    >
+                      <CardContent>
+                        <Typography
+                          textAlign="center"
+                          gutterBottom
+                          variant="h2"
+                          component="h2"
+                        >
+                          {currentQuestion.answers[3].text}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              </Grid>
+              <Button
+                sx={{
+                  height: 50,
+                  width: 200,
+                  marginTop: 10,
+                }}
+                onClick={clickCheckValidity}
+                disabled={!isValid}
+                type="button"
+                variant="contained"
+              >
+                {getButtonText()}
+              </Button>
+            </>
           )}
-        </TitleRow>
-        {currentQuestion && (
-          <>
-            <AnswerRow>
+          {/* <AnswerRow>
               <Col>
                 <AnswerButton
                   isSelected={isSelected(currentQuestion.answers[0].id)}
@@ -239,23 +424,30 @@ function GamePage() {
               </Col>
             </AnswerRow>
             <Row>
-              <StyledButton
+              <Button
                 onClick={clickCheckValidity}
                 disabled={!isValid}
                 type="button"
               >
                 {getButtonText()}
-              </StyledButton>
+              </Button>
+            </Row> */}
+          {!currentQuestion && (
+            <Row>
+              <Button
+                sx={{
+                  height: 50,
+                  width: 200,
+                }}
+                type="button"
+                variant="contained"
+                onClick={startQuiz}
+              >
+                Start Quiz
+              </Button>
             </Row>
-          </>
-        )}
-        {!currentQuestion && (
-          <Row>
-            <StyledButton type="button" onClick={startQuiz}>
-              Start Quiz
-            </StyledButton>
-          </Row>
-        )}
+          )}
+        </Box>
       </Container>
       <ModalOverlay
         isOpen={showModal}
