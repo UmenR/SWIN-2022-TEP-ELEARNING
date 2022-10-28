@@ -1,3 +1,6 @@
+/**
+ * Renders the quiz results page shown after completing a quiz.
+ */
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";

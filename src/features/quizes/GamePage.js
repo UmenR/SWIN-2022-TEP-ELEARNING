@@ -1,3 +1,6 @@
+/**
+ * Renders the play game page
+ */
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
@@ -119,11 +122,7 @@ function GamePage() {
   function checkAnswerValidity() {
     let isCorrect = false;
     for (const answer of answers) {
-      // for (const solution of currentQuestion.solutions) {
-      //   if (solution.id === answer) {
-      //     isValid = true;
-      //   }
-      // }
+      
       if(answer !== currentQuestion.solutions.id){
         isCorrect = false;
         break;
@@ -350,51 +349,6 @@ function GamePage() {
               </Button>
             </>
           )}
-          {/* <AnswerRow>
-              <Col>
-                <AnswerButton
-                  isSelected={isSelected(currentQuestion.answers[0].id)}
-                  onClick={() => clickAnswer(currentQuestion.answers[0].id)}
-                >
-                  <AnswerText>{currentQuestion.answers[0].text}</AnswerText>
-                </AnswerButton>
-              </Col>
-              <Col>
-                <AnswerButton
-                  isSelected={isSelected(currentQuestion.answers[1].id)}
-                  onClick={() => clickAnswer(currentQuestion.answers[1].id)}
-                >
-                  <AnswerText>{currentQuestion.answers[1].text}</AnswerText>
-                </AnswerButton>
-              </Col>
-            </AnswerRow>
-            <AnswerRow>
-              <Col>
-                <AnswerButton
-                  isSelected={isSelected(currentQuestion.answers[2].id)}
-                  onClick={() => clickAnswer(currentQuestion.answers[2].id)}
-                >
-                  <AnswerText>{currentQuestion.answers[2].text}</AnswerText>
-                </AnswerButton>
-              </Col>
-              <Col>
-                <AnswerButton
-                  isSelected={isSelected(currentQuestion.answers[3].id)}
-                  onClick={() => clickAnswer(currentQuestion.answers[3].id)}
-                >
-                  <AnswerText>{currentQuestion.answers[3].text}</AnswerText>
-                </AnswerButton>
-              </Col>
-            </AnswerRow>
-            <Row>
-              <Button
-                onClick={clickCheckValidity}
-                disabled={!isValid}
-                type="button"
-              >
-                {getButtonText()}
-              </Button>
-            </Row> */}
           {!currentQuestion && (
             <Row>
               <Button
@@ -406,7 +360,7 @@ function GamePage() {
                 variant="contained"
                 onClick={startQuiz}
               >
-                Start Quiz
+                Start Game
               </Button>
             </Row>
           )}

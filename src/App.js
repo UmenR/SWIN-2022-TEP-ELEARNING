@@ -22,12 +22,14 @@ import { USER_AUTH_TYPE } from "./store/authentication/authenticationSlice";
 
 const { Header } = Layout;
 
+// This is the starting point of the application.
 function App() {
   const authStatus = useSelector(authenticationStatusSelector);
 
   return (
     <Layout className="layout">
       <Header>
+        {/* Configure links for navigation  */}
         <div className="logo" />
         <Menu theme="dark" mode="horizontal">
           {(authStatus === USER_AUTH_TYPE.teacher ||
@@ -54,6 +56,7 @@ function App() {
           )}
         </Menu>
       </Header>
+      {/* Configure routing */}
       <Routes>
         <Route
           path="/"

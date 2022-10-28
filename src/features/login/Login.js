@@ -30,6 +30,11 @@ function Login() {
   const [isTeacherLogin, setIsTeacherLogin] = useState(true);
   const dispatch = useDispatch();
 
+  /**
+   * Conditional login based on student or teacher
+   * @param {*} username 
+   * @param {*} password 
+   */
   async function onPressLogin(username, password) {
     console.log(isTeacherLogin);
     const result = await dispatch(

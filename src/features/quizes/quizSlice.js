@@ -5,24 +5,9 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../api/Request";
-import { wait } from "../../utils/miscUtils";
 
-import { MOCK_QUESTIONS, MOCK_QUESTIONS2 } from "../questions/questionsSlice";
 
-const MOCK_QUIZZES = [
-  {
-    id: 1,
-    description: "test quiz",
-    title:"Addition practice - 1",
-    questions: MOCK_QUESTIONS,
-  },
-  {
-    id: 2,
-    description: "test quiz 2",
-    title:"Addition practice - 2",
-    questions: MOCK_QUESTIONS2,
-  }
-];
+
 
 const initialState = {
   quizzes: [],
@@ -54,8 +39,6 @@ export const fetchQuizzes = createAsyncThunk(
   async ({_}, { dispatch, getState }) => {
     // No Authetnicated user found
       try {
-        // TODO: hookup actual API call here & read from params passed
-        // await api.post()
         const result = await api.get('/get-mockQuiz')
         console.log(result)
         dispatch(
@@ -76,8 +59,6 @@ export const addQuiz = createAsyncThunk(
   async ({newQuiz}, { dispatch, getState }) => {
     // No Authetnicated user found
       try {
-        // console.log('-- newq')
-        // console.log(newQuiz)
         await api.post('/add-mockQuiz',newQuiz)
       } catch (err) {
         console.log(err)

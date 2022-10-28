@@ -1,3 +1,6 @@
+/**
+ * Renders a quiz list visible to the teacher
+ */
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

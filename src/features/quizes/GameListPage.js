@@ -1,3 +1,6 @@
+/**
+ * Renders the list of Games visible to a student
+ */
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

@@ -4,7 +4,6 @@
  */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { wait } from "../../utils/miscUtils";
 import { api } from "../../api/Request";
 
 export const DIFICULTY_LEVEL = {
@@ -12,187 +11,6 @@ export const DIFICULTY_LEVEL = {
   MODERATE:2,
   HARD:3
 }
-
-export const MOCK_QUESTIONS = [
-  {
-    id: 1,
-    text: "what is 2+2",
-    answers: [
-      {
-        id: 1,
-        text: 2,
-      },
-      {
-        id: 2,
-        text: 3,
-      },
-      {
-        id: 3,
-        text: 4,
-      },
-      {
-        id: 4,
-        text: 5,
-      },
-    ],
-    solutions: [
-      {
-        id: 3,
-        text: 4,
-      },
-    ],
-    dificulty: DIFICULTY_LEVEL.EASY
-  },
-  {
-    id: 2,
-    text: "what is 2+1",
-    answers: [
-      {
-        id: 1,
-        text: 1,
-      },
-      {
-        id: 2,
-        text: 3,
-      },
-      {
-        id: 3,
-        text: 4,
-      },
-      {
-        id: 4,
-        text: 5,
-      },
-    ],
-    solutions: [
-      {
-        id: 2,
-        text: 3,
-      },
-    ],
-    dificulty: DIFICULTY_LEVEL.MODERATE 
-  },
-  {
-    id: 3,
-    text: "what is 4+1",
-    answers: [
-      {
-        id: 1,
-        text: 1,
-      },
-      {
-        id: 2,
-        text: 3,
-      },
-      {
-        id: 3,
-        text: 4,
-      },
-      {
-        id: 4,
-        text: 5,
-      },
-    ],
-    solutions: [
-      {
-        id: 4,
-        text: 5,
-      },
-    ],
-    dificulty: DIFICULTY_LEVEL.MODERATE 
-  },
-];
-
-export const MOCK_QUESTIONS2 = [
-  {
-    id: 4,
-    text: "what is 10+1",
-    answers: [
-      {
-        id: 1,
-        text: 11,
-      },
-      {
-        id: 2,
-        text: 3,
-      },
-      {
-        id: 3,
-        text: 4,
-      },
-      {
-        id: 4,
-        text: 5,
-      },
-    ],
-    solutions: [
-      {
-        id: 1,
-        text: 11,
-      },
-    ],
-    dificulty: DIFICULTY_LEVEL.MODERATE 
-  },
-  {
-    id: 4,
-    text: "what is 12+1",
-    answers: [
-      {
-        id: 1,
-        text: 13,
-      },
-      {
-        id: 2,
-        text: 3,
-      },
-      {
-        id: 3,
-        text: 4,
-      },
-      {
-        id: 4,
-        text: 5,
-      },
-    ],
-    solutions: [
-      {
-        id: 1,
-        text: 13,
-      },
-    ],
-    dificulty: DIFICULTY_LEVEL.MODERATE 
-  },
-  {
-    id: 4,
-    text: "what is 20+1",
-    answers: [
-      {
-        id: 1,
-        text: 21,
-      },
-      {
-        id: 2,
-        text: 3,
-      },
-      {
-        id: 3,
-        text: 4,
-      },
-      {
-        id: 4,
-        text: 5,
-      },
-    ],
-    solutions: [
-      {
-        id: 1,
-        text: 21,
-      },
-    ],
-    dificulty: DIFICULTY_LEVEL.MODERATE 
-  },
-]
-
 
 const initialState = {
   questions: [],
@@ -219,8 +37,6 @@ export const fetchQuestions = createAsyncThunk(
   async ({ params }, { dispatch }) => {
     // No Authetnicated user found
     try {
-      // TODO: hookup actual API call here & read from params passed
-      // await api.post()
       const response = await api.get('/get-type')
       console.log('response')
       console.log(response.data)
@@ -241,8 +57,6 @@ export const createQuestion = createAsyncThunk(
   async ({question}, {dispatch}) => {
     try {
       const newQuestion = question
-      // console.log(`--- new question`)
-      // console.log(newQuestion)
       await api.post('/add-type',newQuestion)
       return true
     } catch (err) {

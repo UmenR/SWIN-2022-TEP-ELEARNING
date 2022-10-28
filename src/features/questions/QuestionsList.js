@@ -1,3 +1,6 @@
+/**
+ * This component renders a list of questions.
+ */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +46,6 @@ function QuestionsList() {
     navigate('/questions/add')
   }
 
-  console.log(currentQuestions);
   return (
     <ThemeProvider theme={theme}>
       <Container component="main">
