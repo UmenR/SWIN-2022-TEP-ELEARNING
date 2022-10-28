@@ -18,6 +18,7 @@ import {
   USER_AUTH_TYPE,
 } from "../../store/authentication/authenticationSlice";
 import { authenticationStatusSelector } from "../../store/authentication/authenticationSelectors";
+import { getScore } from "../rewards/rewardResultSlice";
 
 const theme = createTheme();
 
@@ -42,6 +43,9 @@ function Login() {
     ).unwrap();
     setIsLoading(false);
     if (result) {
+      if(!isTeacherLogin){
+        dispatch(getScore({studentID:username}))
+      }
       navigate("/home");
     } else {
       setHasError(true);

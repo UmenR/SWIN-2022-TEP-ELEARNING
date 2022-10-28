@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Typography } from "antd";
 import {
   Stepper,
@@ -16,6 +16,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 
 import { totalScoreSelector } from "./rewardSelectors";
+import { getScore } from "./rewardResultSlice";
 
 const SCORES = {
   BRONZ: 1,
@@ -25,6 +26,7 @@ const SCORES = {
 const theme = createTheme();
 
 function RewardTree() {
+  const dispatch = useDispatch()
   const totalScore = useSelector(totalScoreSelector);
 
   const { step, incrementStep } = useStepper(0, 3);

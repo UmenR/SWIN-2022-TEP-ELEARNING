@@ -7,29 +7,20 @@ import { selectedGameQuizSelector } from "./quizSelectors";
 import ModalOverlay from "../../common/ModalOverlay";
 import { getStars, hasStar } from "../rewards/rewardUtils";
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
-const theme = createTheme();
 
 const Row = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-const Col = styled.div`
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -38,33 +29,6 @@ const TitleRow = styled(Row)`
     height: 100px;
     width: 100%
     background: black;
-`;
-
-const StyledButton = styled.button`
-  height: 50px;
-  width: 200px;
-  background: red;
-  margin-top: 20px;
-`;
-
-const AnswerButton = styled.div`
-  height: 200px;
-  width: 200px;
-  background: ${(props) => (props.isSelected ? `yellow` : `green`)};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const AnswerRow = styled(Row)`
-  padding-left: 20%;
-  padding-right: 20%;
-  justify-content: space-between;
-  margin-bottom: 50px;
-`;
-
-const AnswerText = styled.h1`
-  color: red;
 `;
 
 const ANSWER_STATES = {
@@ -117,6 +81,7 @@ function GamePage() {
           score: correctCount,
           quiz: currentQuiz,
           stars: getStars(currentQuiz.questions.length, correctCount),
+          correctCount,
         },
       });
     }

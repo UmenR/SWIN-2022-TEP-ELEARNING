@@ -24,13 +24,17 @@ export default function ResultsPage() {
     dispatch(
       postScore({
         params: {
-          game: {
+          quiz: {
             score: location.state.score,
             questions: location.state.quiz.questions.length,
             correct: location.state.correctCount,
+            incorrect: Number(
+              location.state.quiz.questions.length - location.state.correctCount
+            ),
             stars: location.state.stars,
           },
-          quizId: location.state.quiz.id,
+          quizID: location.state.quiz.id,
+          studentID: 1,
         },
       })
     );
