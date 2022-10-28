@@ -1,30 +1,32 @@
-import React, { useMemo, useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import {Table} from "antd";
+import { api } from "../../api/Request";
 
 function Leaderboard(factory, deps) {
     const [loadingData, setLoadingData] = useState(true);
-    const columns = useMemo(() => [
+    const columns =  [
         {
-            Header: "State",
-            accessor: "state",
+            title: "Student",
+            key: "_id",
+            dataIndex:"_id"
         },
         {
-            Header: "Positive Cases",
-            accessor: "positive",
+            title: "Total Stars",
+            key: "total_stars",
+            dataIndex:"total_stars"
         },
         {
-            Header: "Recovered Cases",
-            accessor: "recovered",
+            title: "Total Score",
+            key: "total_score",
+            dataIndex:"total_score"
         },
-    ], deps);
+    ]
 
     const [data, setData] = useState([]);
 
     useEffect(() => {
         async function getData() {
-            await axios
-                .get("http://covidtracking.com/api/v1/states/current.json")
+            await api.get('/get-leader')
                 .then((response) => {
                     // check if the data is populated
                     console.log(response.data);
@@ -44,7 +46,7 @@ function Leaderboard(factory, deps) {
             {loadingData ? (
                 <p>Loading Please wait...</p>
             ) : (
-                <Table columns={columns} data={data} />
+                <Table columns={columns} dataSource={data} />
             )}
         </div>
     );
