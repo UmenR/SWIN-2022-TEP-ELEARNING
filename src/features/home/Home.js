@@ -14,7 +14,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import Leaderboard from "../Leaderboard/Leaderboard";
 
 const theme = createTheme();
 
