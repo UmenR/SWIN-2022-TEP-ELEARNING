@@ -67,7 +67,7 @@ function App() {
           <Route path="results" element={<ResultsPage />} />
           <Route path="list" element={<GameListPage />} />
         </Route>
-        {/* Reward Tree Oage */}
+        {/* Reward Tree Page */}
         <Route path="/rewards">
           <Route path="tree" element={<RewardTree />} />
         </Route>
