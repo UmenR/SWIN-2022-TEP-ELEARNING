@@ -1,88 +1,53 @@
-// import { Space, Table, Tag } from 'antd';
-// import type { ColumnsType } from 'antd/es/table';
-// import React from 'react';
-//
-// interface DataType {
-//     key: string;
-//     name: string;
-//     age: number;
-//     address: string;
-//     tags: string[];
-// }
-//
-// const columns: ColumnsType<DataType> = [
-//     {
-//         title: 'Name',
-//         dataIndex: 'name',
-//         key: 'name',
-//         render: text => <a>{text}</a>,
-//     },
-//     {
-//         title: 'Age',
-//         dataIndex: 'age',
-//         key: 'age',
-//     },
-//     {
-//         title: 'Address',
-//         dataIndex: 'address',
-//         key: 'address',
-//     },
-//     {
-//         title: 'Tags',
-//         key: 'tags',
-//         dataIndex: 'tags',
-//         render: (_, { tags }) => (
-//             <>
-//                 {tags.map(tag => {
-//                     let color = tag.length > 5 ? 'geekblue' : 'green';
-//                     if (tag === 'loser') {
-//                         color = 'volcano';
-//                     }
-//                     return (
-//                         <Tag color={color} key={tag}>
-//                             {tag.toUpperCase()}
-//                         </Tag>
-//                     );
-//                 })}
-//             </>
-//         ),
-//     },
-//     {
-//         title: 'Action',
-//         key: 'action',
-//         render: (_, record) => (
-//             <Space size="middle">
-//                 <a>Invite {record.name}</a>
-//                 <a>Delete</a>
-//             </Space>
-//         ),
-//     },
-// ];
-//
-// const data: DataType[] = [
-//     {
-//         key: '1',
-//         name: 'John Brown',
-//         age: 32,
-//         address: 'New York No. 1 Lake Park',
-//         tags: ['nice', 'developer'],
-//     },
-//     {
-//         key: '2',
-//         name: 'Jim Green',
-//         age: 42,
-//         address: 'London No. 1 Lake Park',
-//         tags: ['loser'],
-//     },
-//     {
-//         key: '3',
-//         name: 'Joe Black',
-//         age: 32,
-//         address: 'Sidney No. 1 Lake Park',
-//         tags: ['cool', 'teacher'],
-//     },
-// ];
-//
-// const App: React.FC = () => <Table columns={columns} dataSource={data} />;
-//
-// export default App;
+import React, { useMemo, useState, useEffect } from "react";
+import axios from "axios";
+import {Table} from "antd";
+
+function Leaderboard(factory, deps) {
+    const [loadingData, setLoadingData] = useState(true);
+    const columns = useMemo(() => [
+        {
+            Header: "State",
+            accessor: "state",
+        },
+        {
+            Header: "Positive Cases",
+            accessor: "positive",
+        },
+        {
+            Header: "Recovered Cases",
+            accessor: "recovered",
+        },
+    ], deps);
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        async function getData() {
+            await axios
+                .get("https://covidtracking.com/api/v1/states/current.json")
+                .then((response) => {
+                    // check if the data is populated
+                    console.log(response.data);
+                    setData(response.data);
+                    // you tell it that you had the result
+                    setLoadingData(false);
+                });
+        }
+        if (loadingData) {
+            getData();
+        }
+    }, []);
+
+    return (
+        <div className="Leaderboard">
+            {/* here you check if the state is loading otherwise if you wioll not call that you will get a blank page because the data is an empty array at the moment of mounting */}
+            {loadingData ? (
+                <p>Loading Please wait...</p>
+            ) : (
+                <Table columns={columns} data={data} />
+            )}
+        </div>
+    );
+}
+
+export default Leaderboard;
