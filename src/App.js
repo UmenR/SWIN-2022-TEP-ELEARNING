@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 import { Link, Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from "./common/Protected";
+import Dashboard from "./features/DataVis/Dashboard";
 import HomePage from "./features/home/Home";
+import Leaderboard from "./features/Leaderboard/Leaderboard";
 import Login from "./features/login/Login";
 import QuestionEditPage from "./features/questions/QuestionEdit";
 import QuestionsList from "./features/questions/QuestionsList";
@@ -35,9 +37,20 @@ function App() {
             </Menu.Item>
           )}
           {authStatus === USER_AUTH_TYPE.teacher && (
-            <Menu.Item key="quizzes/list">
-              <Link to="/quizzes/list">quizes</Link>
-            </Menu.Item>
+            <>
+              <Menu.Item key="quizzes/list">
+                <Link to="/quizzes/list">quizes</Link>
+              </Menu.Item>
+              <Menu.Item key="questions/list">
+                <Link to="/quizzes/list">questions</Link>
+              </Menu.Item>
+              <Menu.Item key="statistics">
+                <Link to="/stats">statistics</Link>
+              </Menu.Item>
+              <Menu.Item key="leaderboard">
+                <Link to="/leaderboard">leaderboard</Link>
+              </Menu.Item>
+            </>
           )}
         </Menu>
       </Header>
@@ -86,6 +99,14 @@ function App() {
         {/* Reward Tree Page */}
         <Route path="/rewards">
           <Route path="tree" element={<RewardTree />} />
+        </Route>
+        {/* Leader board */}
+        <Route path="/leaderboard">
+          <Route path="" element={<Leaderboard />} />
+        </Route>
+        {/* Dashboard */}
+        <Route path="/stats">
+          <Route path="" element={<Dashboard />} />
         </Route>
       </Routes>
     </Layout>

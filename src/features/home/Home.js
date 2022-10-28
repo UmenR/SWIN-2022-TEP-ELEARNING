@@ -154,66 +154,63 @@ function HomePage() {
                       </CardContent>
                     </CardActionArea>
                   </Card>
-
                 </Grid>
                 <Grid
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                item
-                xs={6}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  item
+                  xs={6}
                 >
-                <Card sx={{ width: 345, height: 300 }}>
-                <CardActionArea
-                onClick={() => handleNavigation("/quizzes/list")}
-                >
-                <CardMedia
-                component="img"
-                height="200"
-                image="/logo192.png"
-                />
-                <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Quizzes
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                Browse and create quizzes
-                </Typography>
-                </CardContent>
-                </CardActionArea>
-                </Card>
+                  <Card sx={{ width: 345, height: 300 }}>
+                    <CardActionArea
+                      onClick={() => handleNavigation("/stats")}
+                    >
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image="/logo192.png"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          Statistics
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Get an insight on how your students are performing
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
                 </Grid>
                 <Grid
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                item
-                xs={6}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  item
+                  xs={6}
                 >
-                <Card sx={{ width: 345, height: 300 }}>
-                <CardActionArea
-                onClick={() => handleNavigation("/questions/list")}
-                >
-                <CardMedia
-                component="img"
-                height="200"
-                image="/logo192.png"
-                />
-                <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Questions
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                Browse and create questions
-                </Typography>
-                </CardContent>
-                </CardActionArea>
-                </Card>
-
+                  <Card sx={{ width: 345, height: 300 }}>
+                    <CardActionArea
+                      onClick={() => handleNavigation("/leaderboard")}
+                    >
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image="/logo192.png"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          Leaderboard
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Browse the current leaderboard
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
                 </Grid>
-                </>
-
-                )}
+              </>
+            )}
           </Grid>
         </Box>
       </Container>

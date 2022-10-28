@@ -24,7 +24,7 @@ function Leaderboard(factory, deps) {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("https://covidtracking.com/api/v1/states/current.json")
+                .get("http://covidtracking.com/api/v1/states/current.json")
                 .then((response) => {
                     // check if the data is populated
                     console.log(response.data);
