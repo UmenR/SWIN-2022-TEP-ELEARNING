@@ -96,6 +96,33 @@ function HomePage() {
                     </CardActionArea>
                   </Card>
                 </Grid>
+                <Grid
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  item
+                  xs={6}
+                >
+                  <Card sx={{ width: 345, height: 300 }}>
+                    <CardActionArea
+                      onClick={() => handleNavigation("/leaderboard")}
+                    >
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image="/podium.png"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          Leaderboard
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Browse the current leaderboard
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
               </>
             )}
             {authStatus === USER_AUTH_TYPE.teacher && (
