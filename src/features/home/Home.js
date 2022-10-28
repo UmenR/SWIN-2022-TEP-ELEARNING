@@ -56,7 +56,7 @@ function HomePage() {
                       <CardMedia
                         component="img"
                         height="200"
-                        image="/logo192.png"
+                        image="/game.jpg"
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -83,7 +83,7 @@ function HomePage() {
                       <CardMedia
                         component="img"
                         height="200"
-                        image="/logo192.png"
+                        image="/medal.jpg"
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -114,7 +114,7 @@ function HomePage() {
                       <CardMedia
                         component="img"
                         height="200"
-                        image="/logo192.png"
+                        image="/quiz.jpg"
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -141,7 +141,7 @@ function HomePage() {
                       <CardMedia
                         component="img"
                         height="200"
-                        image="/logo192.png"
+                        image="/questions.jpg"
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -168,7 +168,7 @@ function HomePage() {
                       <CardMedia
                         component="img"
                         height="200"
-                        image="/logo192.png"
+                        image="/stat.webp"
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -195,7 +195,7 @@ function HomePage() {
                       <CardMedia
                         component="img"
                         height="200"
-                        image="/logo192.png"
+                        image="/podium.png"
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
