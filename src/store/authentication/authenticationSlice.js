@@ -36,19 +36,40 @@ export const loginUser = createAsyncThunk(
     // No Authetnicated user found
     if (!state.isAuthenticated) {
       try {
-        // TODO: hookup actual API call here & read from params passed
-        // await api.post()
-        await wait(1500);
-        dispatch(
-          login({
-            authStatus: 1,
-            user: {
-              firstName: "jane",
-              userId: "jane@doe.com",
-            },
-          })
-        );
-        return true
+        const response = await api.get(`/get-creds/${username}`);
+        console.log(response.data[0].password)
+        console.log(password)
+        if (response.data.length < 0) {
+          console.log("-- no user");
+          return false
+        } else if (
+          userType === USER_AUTH_TYPE.teacher &&
+          response.data[0].password == password
+        ) {
+          dispatch(
+            login({
+              authStatus: USER_AUTH_TYPE.teacher,
+              user: {
+                firstName: username,
+                userId: username,
+              },
+            })
+          );
+          return true
+        } else if(userType === USER_AUTH_TYPE.student){
+          dispatch(
+            login({
+              authStatus: USER_AUTH_TYPE.student,
+              user: {
+                firstName: username,
+                userId: username,
+              },
+            })
+          );
+          return true
+        }
+
+        return false;
       } catch (err) {
         // TODO: Show error toast
       }

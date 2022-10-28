@@ -4,6 +4,7 @@
  */
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { api } from "../../api/Request";
 import { wait } from "../../utils/miscUtils";
 
 import { MOCK_QUESTIONS, MOCK_QUESTIONS2 } from "../questions/questionsSlice";
@@ -55,7 +56,8 @@ export const fetchQuizzes = createAsyncThunk(
       try {
         // TODO: hookup actual API call here & read from params passed
         // await api.post()
-        await wait(1500);
+        const result = await api.get('/get-leader')
+        console.log(result)
         dispatch(
           setQuizzes({
             quizzes: MOCK_QUIZZES,
@@ -64,6 +66,21 @@ export const fetchQuizzes = createAsyncThunk(
         return true;
       } catch (err) {
         // TODO: Show error toast
+        console.log(err)
+      }
+  }
+);
+
+export const addQuiz = createAsyncThunk(
+  `quizzes/add`,
+  async ({newQuiz}, { dispatch, getState }) => {
+    // No Authetnicated user found
+      try {
+        // console.log('-- newq')
+        // console.log(newQuiz)
+        await api.post('/add-mockQuiz',newQuiz)
+      } catch (err) {
+        console.log(err)
       }
   }
 );

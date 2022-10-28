@@ -5,6 +5,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { wait } from "../../utils/miscUtils";
+import { api } from "../../api/Request";
 
 export const DIFICULTY_LEVEL = {
   EASY:1,
@@ -195,6 +196,7 @@ export const MOCK_QUESTIONS2 = [
 
 const initialState = {
   questions: [],
+  selectedQuestion:null,
 };
 
 export const questionsSlice = createSlice({
@@ -204,10 +206,13 @@ export const questionsSlice = createSlice({
     setQuestions: (state, action) => {
       state.questions = action.payload.questions;
     },
+    setSelectedQuestion: (state,action) => {
+      state.selectedQuestion = action.payload.question
+    }
   },
 });
 
-const { setQuestions } = questionsSlice.actions;
+export const { setQuestions, setSelectedQuestion } = questionsSlice.actions;
 
 export const fetchQuestions = createAsyncThunk(
   `questions/get`,
@@ -227,5 +232,20 @@ export const fetchQuestions = createAsyncThunk(
     }
   }
 );
+
+export const createQuestion = createAsyncThunk(
+  `questions/create`,
+  async ({question}, {dispatch}) => {
+    try {
+      const newQuestion = question
+      // console.log(`--- new question`)
+      // console.log(newQuestion)
+      await api.post('/add-type',newQuestion)
+      return true
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
 
 export default questionsSlice.reducer

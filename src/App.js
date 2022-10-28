@@ -1,19 +1,20 @@
 import { Layout, Menu } from "antd";
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Link, Route, Routes } from "react-router-dom";
 
-import Login from "./features/login/Login";
-import HomePage from "./features/home/Home";
-import QuizList from "./features/quizes/QuizList";
-import QuestionsPage from "./features/questions/QuestionsPage";
 import ProtectedRoute from "./common/Protected";
-import CreateQuiz from "./features/quizes/CreateQuiz";
-import ResultsPage from "./features/quizes/ResultsPage";
+import HomePage from "./features/home/Home";
+import Login from "./features/login/Login";
+import QuestionEditPage from "./features/questions/QuestionEdit";
 import QuestionsList from "./features/questions/QuestionsList";
-import GamePage from "./features/quizes/GamePage";
-import RewardTree from "./features/rewards/rewardTree";
+import QuestionsPage from "./features/questions/QuestionsPage";
+import CreateQuiz from "./features/quizes/CreateQuiz";
 import GameListPage from "./features/quizes/GameListPage";
+import GamePage from "./features/quizes/GamePage";
+import QuizList from "./features/quizes/QuizList";
+import ResultsPage from "./features/quizes/ResultsPage";
+import RewardTree from "./features/rewards/rewardTree";
 import { authenticationStatusSelector } from "./store/authentication/authenticationSelectors";
 import { USER_AUTH_TYPE } from "./store/authentication/authenticationSlice";
 
@@ -29,10 +30,10 @@ function App() {
         <Menu theme="dark" mode="horizontal">
           {(authStatus === USER_AUTH_TYPE.teacher ||
             authStatus === USER_AUTH_TYPE.student) && (
-              <Menu.Item key="home">
-                <Link to="/home">home</Link>
-              </Menu.Item>
-            )}
+            <Menu.Item key="home">
+              <Link to="/home">home</Link>
+            </Menu.Item>
+          )}
           {authStatus === USER_AUTH_TYPE.teacher && (
             <Menu.Item key="quizzes/list">
               <Link to="/quizzes/list">quizes</Link>
@@ -41,8 +42,22 @@ function App() {
         </Menu>
       </Header>
       <Routes>
-        <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
-        <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/quizzes">
           <Route
@@ -60,6 +75,7 @@ function App() {
         <Route path="/questions">
           <Route path="add" element={<QuestionsPage />} />
           <Route path="list" element={<QuestionsList />} />
+          <Route path="edit" element={<QuestionEditPage />} />
         </Route>
         {/* Games page  */}
         <Route path="/games">

@@ -30,10 +30,11 @@ function Login() {
   const dispatch = useDispatch();
 
   async function onPressLogin(username, password) {
+    console.log(isTeacherLogin);
     const result = await dispatch(
       loginUser({
         username,
-        ...(isTeacherLogin && password),
+        ...(isTeacherLogin && { password: password }),
         userType: isTeacherLogin
           ? USER_AUTH_TYPE.teacher
           : USER_AUTH_TYPE.student,
