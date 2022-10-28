@@ -1,3 +1,6 @@
+/**
+ * Renders the play game page
+ */
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
@@ -119,11 +122,7 @@ function GamePage() {
   function checkAnswerValidity() {
     let isCorrect = false;
     for (const answer of answers) {
-      // for (const solution of currentQuestion.solutions) {
-      //   if (solution.id === answer) {
-      //     isValid = true;
-      //   }
-      // }
+      
       if(answer !== currentQuestion.solutions.id){
         isCorrect = false;
         break;

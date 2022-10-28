@@ -1,3 +1,6 @@
+/**
+ * This page is for rendering the create questions page
+ */
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Formik, Form } from "formik";

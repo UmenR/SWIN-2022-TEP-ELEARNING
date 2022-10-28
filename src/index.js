@@ -8,6 +8,7 @@ import 'antd/dist/antd.css';
 import App from "./App";
 import {store} from "./store/store";
 
+// Router and navigation providers are configured here
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
