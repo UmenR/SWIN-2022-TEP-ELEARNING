@@ -33,7 +33,7 @@ export default function ResultsPage() {
             ),
             stars: location.state.stars,
           },
-          quizID: location.state.quiz.id,
+          quizID: location.state.quiz.quizID,
           studentID: 1,
         },
       })

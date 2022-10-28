@@ -107,7 +107,7 @@ function QuestionsList() {
                                 control={
                                   <Radio
                                     checked={
-                                      question.solutions[0].id === answer.id
+                                      question.solutions.id === answer.id
                                     }
                                   />
                                 }

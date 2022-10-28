@@ -221,10 +221,13 @@ export const fetchQuestions = createAsyncThunk(
     try {
       // TODO: hookup actual API call here & read from params passed
       // await api.post()
-      await wait(1500);
+      const response = await api.get('/get-type')
+      console.log('response')
+      console.log(response.data)
+
       dispatch(
         setQuestions({
-          questions:MOCK_QUESTIONS
+          questions:response.data
         })
       );
     } catch (err) {

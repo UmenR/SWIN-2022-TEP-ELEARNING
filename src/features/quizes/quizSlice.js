@@ -56,11 +56,11 @@ export const fetchQuizzes = createAsyncThunk(
       try {
         // TODO: hookup actual API call here & read from params passed
         // await api.post()
-        const result = await api.get('/get-leader')
+        const result = await api.get('/get-mockQuiz')
         console.log(result)
         dispatch(
           setQuizzes({
-            quizzes: MOCK_QUIZZES,
+            quizzes: result.data,
           })
         );
         return true;

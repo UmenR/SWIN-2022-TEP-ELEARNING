@@ -103,7 +103,6 @@ function GamePage() {
   function clickAnswer(id) {
     // Answer already exists
     const answerIndex = answers.findIndex((element) => id === element);
-    console.log(answerIndex);
     if (answerIndex > -1) {
       answers.splice(answerIndex, 1);
       setAnswers([...answers]);
@@ -120,13 +119,12 @@ function GamePage() {
   function checkAnswerValidity() {
     let isCorrect = false;
     for (const answer of answers) {
-      let isValid = false;
-      for (const solution of currentQuestion.solutions) {
-        if (solution.id === answer) {
-          isValid = true;
-        }
-      }
-      if (!isValid) {
+      // for (const solution of currentQuestion.solutions) {
+      //   if (solution.id === answer) {
+      //     isValid = true;
+      //   }
+      // }
+      if(answer !== currentQuestion.solutions.id){
         isCorrect = false;
         break;
       }
@@ -147,7 +145,7 @@ function GamePage() {
       setModalHeaderContent("Your answer is correct!");
     } else {
       setModalHeaderContent("Your answer is Incorrect");
-      setModalBodyContent(`Correct Answer is ${currentQuestion.solutions[0].text}`);
+      setModalBodyContent(`Correct Answer is ${currentQuestion.solutions.text}`);
     }
     setShowModal(true);
   }

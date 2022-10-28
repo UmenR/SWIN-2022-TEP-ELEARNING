@@ -116,7 +116,7 @@ function QuizList() {
                   justifyContent="center"
                   item
                   xs={6}
-                  key={quiz.id}
+                  key={quiz.quizID}
                 >
                   <Card sx={{ width: 345, height: 300 }}>
                     <CardActionArea onClick={() => handleNavigation(quiz)}>
