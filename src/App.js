@@ -33,22 +33,22 @@ function App() {
           {(authStatus === USER_AUTH_TYPE.teacher ||
             authStatus === USER_AUTH_TYPE.student) && (
             <Menu.Item key="home">
-              <Link to="/home">home</Link>
+              <Link to="/home">Home</Link>
             </Menu.Item>
           )}
           {authStatus === USER_AUTH_TYPE.teacher && (
             <>
               <Menu.Item key="quizzes/list">
-                <Link to="/quizzes/list">quizes</Link>
+                <Link to="/quizzes/list">Quizes</Link>
               </Menu.Item>
               <Menu.Item key="questions/list">
-                <Link to="/quizzes/list">questions</Link>
+                <Link to="/quizzes/list">Questions</Link>
               </Menu.Item>
               <Menu.Item key="statistics">
-                <Link to="/stats">statistics</Link>
+                <Link to="/stats">Statistics</Link>
               </Menu.Item>
               <Menu.Item key="leaderboard">
-                <Link to="/leaderboard">leaderboard</Link>
+                <Link to="/leaderboard">Leaderboard</Link>
               </Menu.Item>
             </>
           )}
@@ -81,32 +81,109 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="add" element={<CreateQuiz />} />
-          <Route path="edit" element={<CreateQuiz />} />
+          <Route
+            path="add"
+            element={
+              <ProtectedRoute>
+                <CreateQuiz />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="edit"
+            element={
+              <ProtectedRoute>
+                <CreateQuiz />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         {/* Questions page  */}
         <Route path="/questions">
-          <Route path="add" element={<QuestionsPage />} />
-          <Route path="list" element={<QuestionsList />} />
-          <Route path="edit" element={<QuestionEditPage />} />
+          <Route
+            path="add"
+            element={
+              <ProtectedRoute>
+                <QuestionsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="list"
+            element={
+              <ProtectedRoute>
+                <QuestionsList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="edit"
+            element={
+              <ProtectedRoute>
+                <QuestionEditPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         {/* Games page  */}
         <Route path="/games">
-          <Route path="play" element={<GamePage />} />
-          <Route path="results" element={<ResultsPage />} />
-          <Route path="list" element={<GameListPage />} />
+          <Route
+            path="play"
+            element={
+              <ProtectedRoute>
+                <GamePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="results"
+            element={
+              <ProtectedRoute>
+                <ResultsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="list"
+            element={
+              <ProtectedRoute>
+                <GameListPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         {/* Reward Tree Page */}
         <Route path="/rewards">
-          <Route path="tree" element={<RewardTree />} />
+          <Route
+            path="tree"
+            element={
+              <ProtectedRoute>
+                <RewardTree />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         {/* Leader board */}
         <Route path="/leaderboard">
-          <Route path="" element={<Leaderboard />} />
+          <Route
+            path=""
+            element={
+              <ProtectedRoute>
+                <Leaderboard />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         {/* Dashboard */}
         <Route path="/stats">
-          <Route path="" element={<Dashboard />} />
+          <Route
+            path=""
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </Layout>
@@ -114,65 +191,3 @@ function App() {
 }
 
 export default App;
-
-// function App() {
-//   async function testOnClick() {
-//     const response = await api.get("/users", {
-//       params: {
-//         page: 2,
-//       },
-//     });
-//     console.log(`data ${response.data}`);
-//   }
-//
-//   return (
-//     <>
-//       <Header>Styled Component Test</Header>
-//       <button onClick={testOnClick}>make API request</button>
-//       <NavList>
-//         <div>
-//           <Link to="/quizzes/list">quizes</Link>
-//         </div>
-//         <div>
-//           <Link to="/home">home</Link>
-//         </div>
-//         <div>
-//           <Link to="/login">login</Link>
-//         </div>
-//         <div>
-//           <Link to="/questions/add">questions</Link>
-//         </div>
-//         <div>
-//           <Link to="/games/play">questions</Link>
-//         </div>
-//       </NavList>
-// <Routes>
-//   <Route path="/home" element={<HomePage />} />
-//   <Route path="/login" element={<Login />} />
-//   <Route path="/quizzes">
-//     <Route
-//       path="list"
-//       element={
-//         <ProtectedRoute>
-//           <QuizList />
-//         </ProtectedRoute>
-//       }
-//     />
-//     <Route path="add" element={<CreateQuiz />} />
-//   </Route>
-//   {/* Questions page  */}
-//   <Route path="/questions">
-//     <Route path="add" element={<QuestionsPage />} />
-//     <Route path="list" element={<QuestionsList />} />
-//   </Route>
-//   {/* Games page  */}
-//   <Route path="/games">
-//     <Route path="play" element={<GamePage />} />
-//     <Route path="results" element={<ResultsPage />} />
-//   </Route>
-// </Routes>
-//     </>
-//   );
-// }
-//
-// export default App;
