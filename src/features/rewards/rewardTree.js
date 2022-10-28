@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Typography } from "antd";
+import Typography from "@mui/material/Typography";
 import {
   Stepper,
   Step,
@@ -15,7 +15,7 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 
-import { totalScoreSelector } from "./rewardSelectors";
+import { totalScoreSelector, totalStarsSelector } from "./rewardSelectors";
 
 const SCORES = {
   BRONZ: 1,
@@ -26,6 +26,7 @@ const theme = createTheme();
 
 function RewardTree() {
   const totalScore = useSelector(totalScoreSelector);
+  const totalStars = useSelector(totalStarsSelector);
 
   const { step, incrementStep } = useStepper(0, 3);
 
@@ -53,61 +54,81 @@ function RewardTree() {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             marginBottom: 10,
-            marginLeft: 10,
-            marginRight: 10,
             height: 600,
           }}
         >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 5 ,
+            }}
+          >
+            <Typography variant="h1" component="h1">
+              🌟 {`${totalStars}`}
+            </Typography>
+          </Box>
           <Stepper step={step}>
             <Step>
               <StepTitle>
-                <Typography variant="h4" component="h4">
+                <Typography variant="h6" component="h6">
                   Bronze
                 </Typography>
-                <Typography variant="h1" component="h1">
+                <Typography variant="h4" component="h4">
                   🥉
                 </Typography>
               </StepTitle>
               <StepStatus />
               {totalScore < SCORES.BRONZ ? (
                 <StepDescription>
-                  Need {SCORES.BRONZ - Number(totalScore || 0)} points more to unlock
+                  Need {SCORES.BRONZ - Number(totalScore || 0)} points more to
+                  unlock
                 </StepDescription>
-              ): <></>}
+              ) : (
+                <></>
+              )}
             </Step>
             <Step>
               <StepTitle>
-                <Typography variant="h4" component="h4">
+                <Typography variant="h6" component="h6">
                   Silver
                 </Typography>
-                <Typography variant="h1" component="h1">
+                <Typography variant="h4" component="h4">
                   🥈
                 </Typography>
               </StepTitle>
               <StepStatus />
               {totalScore < SCORES.SILVER ? (
                 <StepDescription>
-                  Need {SCORES.SILVER - Number(totalScore || 0)} points more to unlock
+                  Need {SCORES.SILVER - Number(totalScore || 0)} points more to
+                  unlock
                 </StepDescription>
-              ) : <></>}
+              ) : (
+                <></>
+              )}
             </Step>
             <Step>
               <StepTitle>
-                <Typography variant="h4" component="h4">
+                <Typography variant="h6" component="h6">
                   Gold
                 </Typography>
-                <Typography variant="h1" component="h1">
+                <Typography variant="h4" component="h4">
                   🥇
                 </Typography>
               </StepTitle>
               <StepStatus />
-              {totalScore < SCORES.GOLD ?  (
+              {totalScore < SCORES.GOLD ? (
                 <StepDescription>
-                  Need {SCORES.GOLD - Number(totalScore || 0)} points more to unlock
+                  Need {SCORES.GOLD - Number(totalScore || 0)} points more to
+                  unlock
                 </StepDescription>
-              ): <></>}
+              ) : (
+                <></>
+              )}
             </Step>
           </Stepper>
         </Box>

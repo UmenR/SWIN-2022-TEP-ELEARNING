@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import uniqid from "uniqid";
+import { useNavigate } from "react-router-dom";
 
 import { styled as mStyled } from "@mui/material/styles";
 import { Formik } from "formik";
@@ -8,12 +10,14 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import QuestionListView from "../questions/QuestionListView";
 import { questionsSelector } from "../questions/questionsSelectors";
 import { fetchQuestions } from "../questions/questionsSlice";
 import { selectedQuizSelector } from "./quizSelectors";
-import { setSelectedQuiz } from "./quizSlice";
+import { addQuiz, setSelectedQuiz } from "./quizSlice";
 
 const Container = styled.div`
   width: 100%;
@@ -52,8 +56,11 @@ const StyledButton = mStyled(Button)(({ theme }) => ({
 }));
 
 export default function CreateQuiz() {
-  const currentQuestions = useSelector(questionsSelector);
-  const currentQuiz = useSelector(selectedQuizSelector);
+
+  const currentQuestions = useSelector(questionsSelector)
+  const currentQuiz = useSelector(selectedQuizSelector)
+  const [isLoading,setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
   const dispatch = useDispatch();
 
@@ -75,10 +82,16 @@ export default function CreateQuiz() {
     })),
   };
 
-  function doSubmit(values) {
+ async function doSubmit(values) {
     // TODO: handle submit
-    console.log(`--- values`);
-    console.log(values);
+    const newQuiz = {
+      ...values,
+      questions: values.questions.filter((item) => item.selected),
+      quizID: uniqid(),
+    };
+    setIsLoading(true)
+    await dispatch(addQuiz({ newQuiz })).unwrap();
+    navigate('/quizzes/list')
   }
 
   // fetch list of questions on initial render.
@@ -86,6 +99,7 @@ export default function CreateQuiz() {
     dispatch(fetchQuestions({}));
 
     return function cleanup() {
+      setIsLoading(false)
       dispatch(setSelectedQuiz({ selectedQuiz: null }));
     };
   }, []);
@@ -146,6 +160,15 @@ export default function CreateQuiz() {
                 >
                   Submit
                 </StyledButton>
+                <Backdrop
+                  sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                  }}
+                  open={isLoading}
+                >
+                  <CircularProgress color="inherit" />
+                </Backdrop>
               </Container>
             );
           }}

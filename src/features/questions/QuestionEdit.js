@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState,useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form } from "formik";
-import uniqid from "uniqid";
-import { useNavigate } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -11,17 +9,16 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import { Button, Radio } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { createQuestion } from "./questionsSlice";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import { createQuestion, setSelectedQuestion } from "./questionsSlice";
+import { selectedQuestionSelector } from "./questionsSelectors";
 
 const theme = createTheme();
 
-function QuestionsPage() {
-  const navigate = useNavigate();
+function QuestionEditPage() {
+
   const dispatch = useDispatch();
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [isLoading,setisLoading] = useState(false);
+  const selectedQuestion = useSelector(selectedQuestionSelector)
 
   function handleRadioClick(answer) {
     if (selectedAnswer && selectedAnswer.id === answer.id) {
@@ -32,7 +29,7 @@ function QuestionsPage() {
   }
 
   const initialFormValues = {
-    text: "",
+    text: "asdsads",
     options: [
       {
         id: 1,
@@ -54,24 +51,32 @@ function QuestionsPage() {
     answers: [],
   };
 
-  async function onSubmit(fields) {
+  function onSubmit(fields) {
     const answers = fields.values.options.map((option, index) => ({
       id: index + 1,
       text: option.text,
-    }));
+    }))
+    console.log(fields.values.options)
     const questionObj = {
       text: fields.values.text,
       answers,
-      solutions: {
-        id: answers.find((option) => option.id === selectedAnswer.id)?.id,
-        text: answers.find((option) => option.id === selectedAnswer.id)?.text,
-      },
-      id: uniqid(),
+      solutions: [
+        {
+          id: answers.find(
+            (option) => option.id === selectedAnswer.id
+          )?.id,
+          text: answers.find(
+            (option) => option.id === selectedAnswer.id
+          )?.text,
+        },
+      ],
     };
-    setisLoading(true)
-    await dispatch(createQuestion({ question: questionObj })).unwrap();
-    navigate("/questions/list");
+    dispatch(createQuestion({ question: questionObj }));
   }
+
+  useEffect(()=>{
+    return ()=>dispatch(setSelectedQuestion({question:null}))
+  })
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,7 +92,11 @@ function QuestionsPage() {
             marginBottom: 10,
           }}
         >
-          <Formik
+        {!selectedQuestion && (
+            <h1>...Loading</h1>
+        )}
+        {selectedQuestion && (
+            <Formik
             initialValues={initialFormValues}
             onSubmit={(values) => onSubmit(values)}
           >
@@ -107,9 +116,10 @@ function QuestionsPage() {
                         id="title"
                         label="Question"
                         variant="outlined"
-                        name="values.text"
+                        name="text"
                         onChange={handleChange}
                         multiline
+                        value={values.text}
                         rows={4}
                         sx={{ width: 500, marginBottom: 5, marginTop: 5 }}
                       />
@@ -214,16 +224,12 @@ function QuestionsPage() {
               );
             }}
           </Formik>
+        )}
+          
         </Box>
       </Container>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isLoading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
     </ThemeProvider>
   );
 }
 
-export default QuestionsPage;
+export default QuestionEditPage;

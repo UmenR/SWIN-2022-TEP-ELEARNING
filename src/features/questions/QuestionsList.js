@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
@@ -14,29 +15,52 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { Button } from "@mui/material";
 
-import { fetchQuestions } from "./questionsSlice";
+import { fetchQuestions, setSelectedQuestion } from "./questionsSlice";
 import { questionsSelector } from "./questionsSelectors";
 
 const theme = createTheme();
 
 function QuestionsList() {
+
   const currentQuestions = useSelector(questionsSelector);
   const dispatch = useDispatch();
 
-  // fetch list of questions on initial render.
+  const navigate = useNavigate()
+
   useEffect(() => {
     dispatch(fetchQuestions({}));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleClickQuestion(questionID) {}
+  function handleClickQuestion(question) {
+    dispatch(setSelectedQuestion({question:question}))
+    navigate('/questions/edit')
+  }
+
+  function handleNew(){
+    navigate('/questions/add')
+  }
 
   console.log(currentQuestions);
   return (
     <ThemeProvider theme={theme}>
       <Container component="main">
         <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            marginTop: 2,
+          }}
+        >
+          <Button onClick={()=>handleNew()} variant="contained">
+            + Add New Question
+          </Button>
+        </Box>
         <Box
           sx={{
             display: "flex",
@@ -83,7 +107,7 @@ function QuestionsList() {
                                 control={
                                   <Radio
                                     checked={
-                                      question.solutions[0].id === answer.id
+                                      question.solutions.id === answer.id
                                     }
                                   />
                                 }

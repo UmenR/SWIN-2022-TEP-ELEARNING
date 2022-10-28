@@ -7,29 +7,20 @@ import { selectedGameQuizSelector } from "./quizSelectors";
 import ModalOverlay from "../../common/ModalOverlay";
 import { getStars, hasStar } from "../rewards/rewardUtils";
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
-const theme = createTheme();
 
 const Row = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-const Col = styled.div`
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -38,33 +29,6 @@ const TitleRow = styled(Row)`
     height: 100px;
     width: 100%
     background: black;
-`;
-
-const StyledButton = styled.button`
-  height: 50px;
-  width: 200px;
-  background: red;
-  margin-top: 20px;
-`;
-
-const AnswerButton = styled.div`
-  height: 200px;
-  width: 200px;
-  background: ${(props) => (props.isSelected ? `yellow` : `green`)};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const AnswerRow = styled(Row)`
-  padding-left: 20%;
-  padding-right: 20%;
-  justify-content: space-between;
-  margin-bottom: 50px;
-`;
-
-const AnswerText = styled.h1`
-  color: red;
 `;
 
 const ANSWER_STATES = {
@@ -117,6 +81,7 @@ function GamePage() {
           score: correctCount,
           quiz: currentQuiz,
           stars: getStars(currentQuiz.questions.length, correctCount),
+          correctCount,
         },
       });
     }
@@ -138,7 +103,6 @@ function GamePage() {
   function clickAnswer(id) {
     // Answer already exists
     const answerIndex = answers.findIndex((element) => id === element);
-    console.log(answerIndex);
     if (answerIndex > -1) {
       answers.splice(answerIndex, 1);
       setAnswers([...answers]);
@@ -155,13 +119,12 @@ function GamePage() {
   function checkAnswerValidity() {
     let isCorrect = false;
     for (const answer of answers) {
-      let isValid = false;
-      for (const solution of currentQuestion.solutions) {
-        if (solution.id === answer) {
-          isValid = true;
-        }
-      }
-      if (!isValid) {
+      // for (const solution of currentQuestion.solutions) {
+      //   if (solution.id === answer) {
+      //     isValid = true;
+      //   }
+      // }
+      if(answer !== currentQuestion.solutions.id){
         isCorrect = false;
         break;
       }
@@ -182,7 +145,7 @@ function GamePage() {
       setModalHeaderContent("Your answer is correct!");
     } else {
       setModalHeaderContent("Your answer is Incorrect");
-      setModalBodyContent(`Correct Answer is ${currentQuestion.solutions[0].text}`);
+      setModalBodyContent(`Correct Answer is ${currentQuestion.solutions.text}`);
     }
     setShowModal(true);
   }
